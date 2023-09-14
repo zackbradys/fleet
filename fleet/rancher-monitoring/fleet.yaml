@@ -22,4 +22,4 @@ diff:
         - {"op":"remove", "path":"/webhooks/0/failurePolicy"}
 
 dependsOn:
-  - name: monitoring-crd-fleet-carbide-rancher-monitoring-crd
+  - name: monitoring-crd-fleet-rancher-monitoring-crd
