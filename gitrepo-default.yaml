@@ -9,8 +9,10 @@ spec:
   paths:
     - /fleet/rancher-monitoring-crd
   targets:
-    - name: downstream-clusters
-    - clusterSelector: {}
+  - name: downstream-clusters
+    clusterSelector:
+      matchLabels:
+        monitoring: true
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
@@ -23,5 +25,7 @@ spec:
   paths:
     - /fleet/rancher-monitoring
   targets:
-    - name: downstream-clusters
-    - clusterSelector: {}
+  - name: downstream-clusters
+    clusterSelector:
+      matchLabels:
+        monitoring: true
