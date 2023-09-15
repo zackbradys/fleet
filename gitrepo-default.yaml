@@ -3,23 +3,29 @@ kind: GitRepo
 metadata:
   name: monitoring-crd
   namespace: fleet-default
-  labels:
-    monitoring: true
 spec:
   repo: https://github.com/zackbradys/fleet
   branch: main
   paths:
     - /fleet/rancher-monitoring-crd
+  targets:
+  - name: monitoring
+    clusterSelector:
+      matchLabels:
+        monitoring: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
   name: monitoring
   namespace: fleet-default
-  labels:
-    monitoring: true
 spec:
   repo: https://github.com/zackbradys/fleet
   branch: main
   paths:
     - /fleet/rancher-monitoring
+  targets:
+  - name: monitoring
+    clusterSelector:
+      matchLabels:
+        monitoring: enabled
