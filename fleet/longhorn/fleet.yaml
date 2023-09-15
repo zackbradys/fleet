@@ -1,0 +1,4 @@
+defaultNamespace: longhorn-system
+
+dependsOn:
+  - name: longhorn-crd-fleet-longhorn-crd
