@@ -1,6 +1,86 @@
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
+  name: longhorn-crd
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/longhorn-crd
+  targets:
+  - name: longhorn
+    clusterSelector:
+      matchLabels:
+        longhorn: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: longhorn
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/longhorn
+  targets:
+  - name: longhorn
+    clusterSelector:
+      matchLabels:
+        longhorn: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: longhorn-tests
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/longhorn-tests
+  targets:
+  - name: longhorn
+    clusterSelector:
+      matchLabels:
+        longhorn: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: neuvector-crd
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/neuvector-crd
+  targets:
+  - name: neuvector
+    clusterSelector:
+      matchLabels:
+        neuvector: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: neuvector
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/neuvector
+  targets:
+  - name: neuvector
+    clusterSelector:
+      matchLabels:
+        neuvector: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
   name: monitoring-crd
   namespace: fleet-default
 spec:

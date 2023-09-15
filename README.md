@@ -1,4 +1,11 @@
-## Rancher Fleet - Kubernetes x GitOps
+## Rancher Fleet - Kubernetes + GitOps
+
+
+* Apply the Fleet GitRepo command to each of the `local` or `downstream` cluster(s). I prefer to use the kubectl shell inside of the Rancher Manager.
+* Add a Cluster Label to each cluster. Once the Cluster Label is added to each cluster, Fleet will automatically deploy the resources.
+  * For Rancher Longhorn, use the label: `longhorn=enabled`
+  * For Rancher NeuVector, use the label: `neuvector=enabled`
+  * For Rancher Monitoring, use the label: `monitoring=enabled`
 
 ### Fleet Local
 ```bash
