@@ -8,11 +8,6 @@ spec:
   branch: main
   paths:
     - /fleet/rancher-monitoring-crd
-  targets:
-  - name: local-cluster
-    clusterSelector:
-      matchLabels:
-        monitoring: true
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
@@ -24,11 +19,6 @@ spec:
   branch: main
   paths:
     - /fleet/rancher-monitoring
-  targets:
-  - name: local-cluster
-    clusterSelector:
-      matchLabels:
-        monitoring: true
 ---
 ### Add Classification Banners
 apiVersion: management.cattle.io/v3
