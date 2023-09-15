@@ -20,6 +20,12 @@ diff:
       name: rancher-monitoring-admission
       operations:
         - {"op":"remove", "path":"/webhooks/0/failurePolicy"}
+    - apiVersion: monitoring.coreos.com/v1
+      kind: ServiceMonitor
+      name: rancher-monitoring-kubelet
+      namespace: kube-system
+      operations:
+        - {"op":"remove", "path":"/spec/endpoints"}
 
 dependsOn:
   - name: monitoring-crd-fleet-rancher-monitoring-crd
