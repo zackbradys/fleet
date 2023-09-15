@@ -21,5 +21,15 @@ diff:
       operations:
         - {"op":"remove", "path":"/webhooks/0/failurePolicy"}
 
+targetCustomizations:
+- name: local-cluster
+  clusterSelector:
+    matchLabels:
+      monitoring: true
+- name: downstream-clusters
+  clusterSelector:
+    matchLabels:
+      monitoring: true
+
 dependsOn:
   - name: monitoring-crd-fleet-rancher-monitoring-crd

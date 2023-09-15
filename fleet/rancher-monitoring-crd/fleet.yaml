@@ -7,3 +7,13 @@ helm:
   version: 102.0.1+up40.1.2
   valuesFiles:
     - rancher-monitoring-crd-values.yaml
+
+targetCustomizations:
+- name: local-cluster
+  clusterSelector:
+    matchLabels:
+      monitoring: true
+- name: downstream-clusters
+  clusterSelector:
+    matchLabels:
+      monitoring: true
