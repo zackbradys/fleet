@@ -2,11 +2,8 @@ defaultNamespace: longhorn-system
 
 helm:
   releaseName: longhorn
-  repo: https://charts.rancher.io
+  repo: https://charts.longhorn.io
   chart: longhorn
-  version: 102.3.0+up1.5.1
+  version: 1.5.1
   valuesFiles:
     - longhorn-values.yaml
-
-dependsOn:
-  - name: longhorn-crd-fleet-longhorn-crd
