@@ -1,7 +1,3 @@
-global:
-  cattle:
-    systemDefaultRegistry: rgcrprod.azurecr.us
-
 default:
   storageMinimalAvailablePercentage: 25
   storageOverProvisioningPercentage: 200

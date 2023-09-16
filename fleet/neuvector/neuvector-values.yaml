@@ -1,13 +1,12 @@
-global:
-  cattle:
-    systemDefaultRegistry: rgcrprod.azurecr.us
-
 controller:
   pvc:
     capacity: 1Gi
     enabled: true
   ranchersso:
     enabled: true
+global:
+  cattle:
+    url: https://rancher.ranchers.io
 k3s:
   enabled: true
   runtimePath: /run/k3s/containerd/containerd.sock
