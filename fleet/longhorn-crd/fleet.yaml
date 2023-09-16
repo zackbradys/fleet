@@ -14,14 +14,20 @@ diff:
       kind: CustomResourceDefinition
       name: engineimages.longhorn.io
       operations:
-        - {"op":"remove", "path":"/spec/"}
+        - {"op":"remove", "path":"/status/acceptedNames"}
+        - {"op":"remove", "path":"/status/conditions"}
+        - {"op":"remove", "path":"/status/storedVersions"}
     - apiVersion: apiextensions.k8s.io/v1
       kind: CustomResourceDefinition
       name: nodes.longhorn.io
       operations:
-        - {"op":"remove", "path":"/spec/"}
+        - {"op":"remove", "path":"/status/acceptedNames"}
+        - {"op":"remove", "path":"/status/conditions"}
+        - {"op":"remove", "path":"/status/storedVersions"}
     - apiVersion: apiextensions.k8s.io/v1
       kind: CustomResourceDefinition
       name: volumes.longhorn.io
       operations:
-        - {"op":"remove", "path":"/spec/"}
+        - {"op":"remove", "path":"/status/acceptedNames"}
+        - {"op":"remove", "path":"/status/conditions"}
+        - {"op":"remove", "path":"/status/storedVersions"}
