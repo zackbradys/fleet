@@ -1,4 +1,0 @@
-defaultNamespace: cattle-neuvector-system
-
-dependsOn:
-  - name: neuvector-fleet-neuvector
