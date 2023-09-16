@@ -7,3 +7,22 @@ helm:
   version: 102.3.0+up1.5.1
   valuesFiles:
     - longhorn-crd-values.yaml
+
+diff:
+  comparePatches:
+    - apiVersion: apiextensions.k8s.io/v1
+      kind: CustomResourceDefinition
+      name: engineimages.longhorn.io
+      operations:
+        - {"op":"remove", "path":"/"}
+    - apiVersion: apiextensions.k8s.io/v1
+      kind: CustomResourceDefinition
+      name: nodes.longhorn.io
+      operations:
+        - {"op":"remove", "path":"/"}
+    - apiVersion: apiextensions.k8s.io/v1
+      kind: CustomResourceDefinition
+      name: volumes.longhorn.io
+      namespace: kube-system
+      operations:
+        - {"op":"remove", "path":"/"}
