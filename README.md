@@ -15,3 +15,6 @@ kubectl apply -f https://raw.githubusercontent.com/zackbradys/fleet/main/gitrepo
 ### Adds the GitRepo(s) to all downstream cluster(s).
 kubectl apply -f https://raw.githubusercontent.com/zackbradys/fleet/main/gitrepo-default.yaml
 ```
+
+### Fleet Deployment Architecture Diagram
+![fleet-architecture-diagram](https://fleet.rancher.io/assets/images/fleet-architecture-f708ce634648101dc98f451dcd59fe84.svg)
