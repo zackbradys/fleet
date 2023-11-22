@@ -4,6 +4,6 @@ helm:
   releaseName: neuvector-crd
   repo: https://charts.rancher.io
   chart: neuvector-crd
-  version: 103.0.0+up2.6.4
+  version: 102.0.6+up2.6.6
   valuesFiles:
     - neuvector-crd-values.yaml
