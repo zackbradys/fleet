@@ -10,22 +10,22 @@ helm:
 
 diff:
   comparePatches:
-  - apiVersion: admissionregistration.k8s.io/v1beta1
-    kind: MutatingWebhookConfiguration
-    name: rancher-monitoring-admission
-    jsonPointers:
-    - /webhooks/0/failurePolicy
-  - apiVersion: admissionregistration.k8s.io/v1beta1
-    kind: ValidatingWebhookConfiguration
-    name: rancher-monitoring-admission
-    jsonPointers:
-    - /webhooks/0/failurePolicy
-  - apiVersion: monitoring.coreos.com/v1
-    kind: ServiceMonitor
-    name: rancher-monitoring-kubelet
-    namespace: kube-system
-    jsonPointers:
-    - /spec/endpoints
+    - apiVersion: admissionregistration.k8s.io/v1beta1
+      kind: MutatingWebhookConfiguration
+      name: rancher-monitoring-admission
+      jsonPointers:
+        - /webhooks/0/failurePolicy
+    - apiVersion: admissionregistration.k8s.io/v1beta1
+      kind: ValidatingWebhookConfiguration
+      name: rancher-monitoring-admission
+      jsonPointers:
+        - /webhooks/0/failurePolicy
+    - apiVersion: monitoring.coreos.com/v1
+      kind: ServiceMonitor
+      name: rancher-monitoring-kubelet
+      namespace: kube-system
+      jsonPointers:
+        - /spec/endpoints
 
 dependsOn:
   - name: monitoring-crd-fleet-rancher-monitoring-crd

@@ -1,3 +1,0 @@
-default:
-  storageMinimalAvailablePercentage: 25
-  storageOverProvisioningPercentage: 200

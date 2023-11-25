@@ -13,5 +13,4 @@ k3s:
 manager:
   svc:
     type: ClusterIP
-psp: true
 rbac: true
