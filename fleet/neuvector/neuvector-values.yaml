@@ -1,6 +1,6 @@
 controller:
   pvc:
-    capacity: 1Gi
+    capacity: 10Gi
     enabled: true
   ranchersso:
     enabled: true
