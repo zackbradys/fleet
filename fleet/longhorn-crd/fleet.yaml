@@ -4,7 +4,7 @@ helm:
   releaseName: longhorn-crd
   repo: https://charts.rancher.io
   chart: longhorn-crd
-  version: 103.2.1+up1.5.3
+  version: 103.2.2+up1.5.4
   valuesFiles:
     - longhorn-crd-values.yaml
 
