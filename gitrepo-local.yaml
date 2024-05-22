@@ -109,3 +109,35 @@ spec:
     clusterSelector:
       matchLabels:
         monitoring: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: logging-crd
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/rancher-logging-crd
+  targets:
+  - name: logging
+    clusterSelector:
+      matchLabels:
+        logging: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: logging
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/rancher-logging
+  targets:
+  - name: logging
+    clusterSelector:
+      matchLabels:
+        logging: enabled

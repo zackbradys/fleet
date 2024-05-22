@@ -1,0 +1,12 @@
+defaultNamespace: cattle-logging-system
+
+helm:
+  releaseName: rancher-logging
+  repo: https://charts.rancher.io
+  chart: rancher-logging
+  version: 103.0.1+up3.17.10
+  valuesFiles:
+    - rancher-logging-values.yaml
+
+dependsOn:
+  - name: logging-crd-fleet-rancher-logging-crd
