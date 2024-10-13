@@ -6,7 +6,7 @@ helm:
   chart: longhorn
   version: 104.2.0+up1.7.1
   valuesFiles:
-    - longhorn-values.yaml
+    - longhorn-values-carbide.yaml
 
 dependsOn:
   - name: longhorn-crd-fleet-longhorn-crd

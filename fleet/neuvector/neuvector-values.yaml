@@ -9,7 +9,6 @@ global:
     url: https://rancher.ranchers.io
 k3s:
   enabled: true
-  runtimePath: /run/k3s/containerd/containerd.sock
 manager:
   svc:
     type: ClusterIP

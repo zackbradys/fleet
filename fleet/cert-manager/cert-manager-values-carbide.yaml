@@ -1,0 +1,16 @@
+crds:
+  enabled: true
+acmesolver:
+  image:
+    repository: rgcrprod.azurecr.us/jetstack/cert-manager-acmesolver
+cainjector:
+  image:
+    repository: rgcrprod.azurecr.us/jetstack/cert-manager-cainjector
+image:
+  repository: rgcrprod.azurecr.us/jetstack/cert-manager-controller
+startupapicheck:
+  image:
+    repository: rgcrprod.azurecr.us/jetstack/cert-manager-startupapicheck
+webhook:
+  image:
+    repository: rgcrprod.azurecr.us/jetstack/cert-manager-webhook
