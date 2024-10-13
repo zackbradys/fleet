@@ -4,9 +4,9 @@ helm:
   releaseName: neuvector
   repo: https://charts.rancher.io
   chart: neuvector
-  version: 104.0.0+up2.7.7
+  version: 104.0.2+up2.8.0
   valuesFiles:
-    - neuvector-values.yaml
+    - neuvector-values-carbide.yaml
 
 dependsOn:
   - name: neuvector-crd-fleet-neuvector-crd

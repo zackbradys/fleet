@@ -1,0 +1,16 @@
+controller:
+  pvc:
+    capacity: 10Gi
+    enabled: true
+  ranchersso:
+    enabled: true
+global:
+  cattle:
+    url: https://rancher.ranchers.io
+k3s:
+  enabled: true
+  runtimePath: /run/k3s/containerd/containerd.sock
+manager:
+  svc:
+    type: ClusterIP
+rbac: true

@@ -4,9 +4,9 @@ helm:
   releaseName: rancher-monitoring
   repo: https://charts.rancher.io
   chart: rancher-monitoring
-  version: 104.1.0+up57.0.3
+  version: 104.1.1+up57.0.3
   valuesFiles:
-    - rancher-monitoring-values.yaml
+    - rancher-monitoring-values-carbide.yaml
 
 diff:
   comparePatches:

@@ -4,6 +4,6 @@ helm:
   releaseName: rancher-monitoring-crd
   repo: https://charts.rancher.io
   chart: rancher-monitoring-crd
-  version: 104.1.0+up57.0.3
+  version: 104.1.1+up57.0.3
   valuesFiles:
-    - rancher-monitoring-crd-values.yaml
+    - rancher-monitoring-crd-values-carbide.yaml
