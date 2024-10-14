@@ -1,0 +1,9 @@
+defaultNamespace: cattle-kubewarden-system
+
+helm:
+  releaseName: kubewarden-crds
+  repo: https://charts.kubewarden.io
+  chart: kubewarden-crds
+  version: 1.9.0
+  valuesFiles:
+    - kubewarden-crds-values-carbide.yaml

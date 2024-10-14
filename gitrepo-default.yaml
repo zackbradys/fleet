@@ -157,3 +157,35 @@ spec:
     clusterSelector:
       matchLabels:
         cert-manager: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: kubewarden-crds
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/kubewarden-crds
+  targets:
+  - name: kubewarden-crds
+    clusterSelector:
+      matchLabels:
+        kubewarden: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: kubewarden
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/kubewarden
+  targets:
+  - name: kubewarden
+    clusterSelector:
+      matchLabels:
+        kubewarden: enabled

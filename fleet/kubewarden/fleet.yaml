@@ -1,0 +1,9 @@
+defaultNamespace: cattle-kubewarden-system
+
+helm:
+  releaseName: kubewarden
+  repo: https://charts.kubewarden.io
+  chart: kubewarden-controller
+  version: 3.0.1
+  valuesFiles:
+    - kubewarden-values-carbide.yaml
