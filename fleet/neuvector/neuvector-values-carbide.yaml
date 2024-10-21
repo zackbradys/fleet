@@ -13,4 +13,4 @@ manager:
   svc:
     type: ClusterIP
 rbac: true
-registry: rgcrprod.azurecr.us
+registry: registry.ranchercarbide.dev
