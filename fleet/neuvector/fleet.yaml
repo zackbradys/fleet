@@ -8,5 +8,23 @@ helm:
   valuesFiles:
     - neuvector-values-carbide.yaml
 
+diff:
+  comparePatches:
+    - apiVersion: coordination.k8s.io/v1
+      kind: Lease
+      name: neuvector-controller
+      jsonPointers:
+        - /spec/leaseTransitions
+    - apiVersion: coordination.k8s.io/v1
+      kind: Lease
+      name: neuvector-cert-upgrader
+      jsonPointers:
+        - /spec/leaseTransitions
+    - apiVersion: batch/v1
+      kind: CronJob
+      name: neuvector-cert-upgrader-pod
+      jsonPointers:
+        - /metadata/annotations
+
 dependsOn:
   - name: neuvector-crd-fleet-neuvector-crd
