@@ -2,15 +2,15 @@ crds:
   enabled: true
 acmesolver:
   image:
-    repository: registry.ranchercarbide.dev/jetstack/cert-manager-acmesolver
+    repository: rgcrprod.azurecr.us/jetstack/cert-manager-acmesolver
 cainjector:
   image:
-    repository: registry.ranchercarbide.dev/jetstack/cert-manager-cainjector
+    repository: rgcrprod.azurecr.us/jetstack/cert-manager-cainjector
 image:
-  repository: registry.ranchercarbide.dev/jetstack/cert-manager-controller
+  repository: rgcrprod.azurecr.us/jetstack/cert-manager-controller
 startupapicheck:
   image:
-    repository: registry.ranchercarbide.dev/jetstack/cert-manager-startupapicheck
+    repository: rgcrprod.azurecr.us/jetstack/cert-manager-startupapicheck
 webhook:
   image:
-    repository: registry.ranchercarbide.dev/jetstack/cert-manager-webhook
+    repository: rgcrprod.azurecr.us/jetstack/cert-manager-webhook

@@ -1,4 +1,4 @@
 global:
   cattle:
-    systemDefaultRegistry: registry.ranchercarbide.dev
+    systemDefaultRegistry: rgcrprod.azurecr.us
     url: https://rancher.ranchers.io
