@@ -189,3 +189,18 @@ spec:
     clusterSelector:
       matchLabels:
         kubewarden: enabled
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: kubewarden-defaults
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/kubewarden-defaults
+  targets:
+  - name: kubewarden-defaults
+    clusterSelector:
+      matchLabels:
+        kubewarden: enabled

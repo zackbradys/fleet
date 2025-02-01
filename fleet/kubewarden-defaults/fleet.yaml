@@ -1,0 +1,9 @@
+defaultNamespace: cattle-kubewarden-system
+
+helm:
+  releaseName: kubewarden-defaults
+  repo: https://charts.kubewarden.io
+  chart: kubewarden-defaults
+  version: 2.6.0
+  valuesFiles:
+    - kubewarden-defaults-values-carbide.yaml
