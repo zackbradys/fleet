@@ -6,7 +6,7 @@ controller:
     enabled: true
 global:
   cattle:
-    url: https://rancher.ranchers.io
+    url: https://rancher.ranchergov.io
 k3s:
   enabled: true
 manager:
