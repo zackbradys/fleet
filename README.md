@@ -7,6 +7,8 @@
   - For Rancher Longhorn, use the label: `longhorn=enabled`
   - For Rancher NeuVector, use the label: `neuvector=enabled`
   - For Rancher Monitoring, use the label: `monitoring=enabled`
+  - For Rancher Logging, use the label: `monitoring=enabled`
+  - For Rancher KubeWarden, use the label: `kubewarden=enabled`
 
 ### Fleet Local and Fleet Default
 
