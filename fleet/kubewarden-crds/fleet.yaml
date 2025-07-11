@@ -4,6 +4,6 @@ helm:
   releaseName: kubewarden-crds
   repo: https://charts.kubewarden.io
   chart: kubewarden-crds
-  version: 1.11.0
+  version: 1.18.0
   valuesFiles:
     - kubewarden-crds-values-carbide.yaml
