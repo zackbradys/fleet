@@ -4,6 +4,6 @@ helm:
   releaseName: rancher-logging-crd
   repo: https://charts.rancher.io
   chart: rancher-logging-crd
-  version: 106.0.1+up4.10.0-rancher.4
+  version: 107.0.1+up4.10.0-rancher.10
   valuesFiles:
     - rancher-logging-crd-values-carbide.yaml

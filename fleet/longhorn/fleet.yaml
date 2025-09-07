@@ -4,7 +4,7 @@ helm:
   releaseName: longhorn
   repo: https://charts.rancher.io
   chart: longhorn
-  version: 106.2.0+up1.8.1
+  version: 107.1.0+up1.9.1
   valuesFiles:
     - longhorn-values-carbide.yaml
 

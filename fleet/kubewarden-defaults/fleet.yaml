@@ -4,6 +4,6 @@ helm:
   releaseName: kubewarden-defaults
   repo: https://charts.kubewarden.io
   chart: kubewarden-defaults
-  version: 3.4.0
+  version: 3.6.1
   valuesFiles:
     - kubewarden-defaults-values-carbide.yaml
