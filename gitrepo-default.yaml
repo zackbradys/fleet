@@ -81,13 +81,13 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: monitoring-crd
+  name: monitoring
   namespace: fleet-default
 spec:
   repo: https://github.com/zackbradys/fleet
   branch: main
   paths:
-    - /fleet/rancher-monitoring-crd
+    - /fleet/kube-prometheus-stack
   targets:
   - name: monitoring
     clusterSelector:
@@ -97,13 +97,13 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: monitoring
+  name: monitoring-dashboards
   namespace: fleet-default
 spec:
   repo: https://github.com/zackbradys/fleet
   branch: main
   paths:
-    - /fleet/rancher-monitoring
+    - /fleet/rancher-monitoring-dashboards
   targets:
   - name: monitoring
     clusterSelector:

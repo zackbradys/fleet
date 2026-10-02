@@ -1,0 +1,12 @@
+defaultNamespace: cattle-monitoring-system
+
+helm:
+  releaseName: rancher-monitoring-dashboards
+  repo: https://charts.rancher.io
+  chart: rancher-monitoring-dashboards
+  version: 110.0.1+up0.1.4
+  valuesFiles:
+    - rancher-monitoring-dashboards-values-carbide.yaml
+
+dependsOn:
+  - name: monitoring-fleet-kube-prometheus-stack

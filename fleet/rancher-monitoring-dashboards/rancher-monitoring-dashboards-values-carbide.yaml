@@ -1,3 +1,6 @@
 global:
   cattle:
     systemDefaultRegistry: registry.ranchercarbide.dev
+
+k3sServer:
+  enabled: false

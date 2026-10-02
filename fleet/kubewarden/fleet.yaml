@@ -4,6 +4,6 @@ helm:
   releaseName: kubewarden
   repo: https://charts.kubewarden.io
   chart: kubewarden-controller
-  version: 5.6.0
+  version: 5.14.1
   valuesFiles:
     - kubewarden-values-carbide.yaml

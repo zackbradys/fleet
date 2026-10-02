@@ -1,4 +1,4 @@
 global:
   cattle:
     systemDefaultRegistry: registry.ranchercarbide.dev
-    url: https://rancher.ranchergov.io
+    url: https://rancher.gov.ranchergov.io

@@ -1,0 +1,9 @@
+defaultNamespace: compliance-operator-system
+
+helm:
+  releaseName: rancher-compliance-crd
+  repo: https://charts.rancher.io
+  chart: rancher-compliance-crd
+  version: 110.2.0+up1.5.3
+  valuesFiles:
+    - rancher-compliance-crd-values-carbide.yaml

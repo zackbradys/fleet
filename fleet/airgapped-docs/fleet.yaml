@@ -1,0 +1,9 @@
+defaultNamespace: carbide-docs-system
+
+helm:
+  releaseName: airgapped-docs
+  repo: https://rancherfederal.github.io/carbide-charts
+  chart: airgapped-docs
+  version: 0.1.56
+  valuesFiles:
+    - airgapped-docs-values-carbide.yaml

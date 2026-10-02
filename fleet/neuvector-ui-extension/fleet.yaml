@@ -1,0 +1,9 @@
+defaultNamespace: cattle-ui-plugin-system
+
+helm:
+  releaseName: neuvector-ui-extension
+  repo: https://raw.githubusercontent.com/rancher/ui-plugin-charts/main
+  chart: neuvector-ui-ext
+  version: 2.1.4
+  valuesFiles:
+    - neuvector-ui-extension-values-carbide.yaml

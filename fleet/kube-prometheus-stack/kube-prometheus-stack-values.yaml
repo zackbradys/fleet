@@ -1,0 +1,31 @@
+grafana:
+  grafana.ini:
+    security:
+      allow_embedding: true
+    auth:
+      disable_login_form: false
+    auth.anonymous:
+      enabled: true
+      org_role: Viewer
+    dashboards:
+      default_home_dashboard_path: /tmp/dashboards/rancher-default-home.json
+    users:
+      auto_assign_org_role: Viewer
+  initChownData:
+    enabled: false
+  testFramework:
+    enabled: false
+
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+
+kubeEtcd:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false
