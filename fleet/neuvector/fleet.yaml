@@ -26,6 +26,12 @@ diff:
       name: neuvector-cert-upgrader-pod
       jsonPointers:
         - /metadata/annotations
+    - apiVersion: v1
+      kind: Secret
+      namespace: cattle-neuvector-system
+      name: neuvector-internal-certs
+      operations:
+        - op: ignore
 
 dependsOn:
   - name: neuvector-crd-fleet-neuvector-crd
