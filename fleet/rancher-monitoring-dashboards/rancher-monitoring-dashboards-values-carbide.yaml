@@ -1,6 +1,8 @@
 global:
   cattle:
     systemDefaultRegistry: registry.ranchercarbide.dev
+    clusterId: '${ default .ClusterName (get .ClusterLabels "management.cattle.io/cluster-name") }'
+    clusterName: '${ default .ClusterName (get .ClusterLabels "management.cattle.io/cluster-display-name") }'
 
 k3sServer:
   enabled: false
