@@ -1,3 +1,9 @@
 global:
   cattle:
     systemDefaultRegistry: registry.ranchercarbide.dev
+
+fluentbit:
+  tolerations:
+    - effect: NoSchedule
+      key: nvidia.com/gpu
+      operator: Exists

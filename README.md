@@ -9,10 +9,10 @@
   - For Rancher Monitoring, use the label: `monitoring=enabled` (kube-prometheus-stack + rancher-monitoring-dashboards; `rancher-monitoring` is deprecated in Rancher 2.15)
   - For Rancher Logging, use the label: `logging=enabled`
   - For Rancher KubeWarden, use the label: `kubewarden=enabled`
-  - For Rancher Government Carbide (compliance + airgapped docs), use the label: `carbide=enabled` (`local` cluster)
+  - For Rancher Government Carbide, use the label: `carbide=enabled` (compliance + RGS STIG profiles on every cluster, plus the airgapped docs on the `local` cluster)
   - For the Rancher UI Extensions (Elemental, KubeWarden, NeuVector, Observability), use the label: `ui-extensions=enabled` (`local` cluster)
 
-All images and charts that Carbide provides come from `registry.ranchercarbide.dev` (`*-values-carbide.yaml`). Clusters must be configured for the Carbide registry ([docs](https://rancherfederal.github.io/carbide-docs/docs/registry-docs/kubernetes-config)).
+All images and charts that Carbide provides come from `registry.ranchercarbide.dev` (`*-values-carbide.yaml`). The RGS STIG profiles chart is pulled with a `registry-creds` basic-auth secret (Carbide registry username and password), which must exist in both `fleet-local` and `fleet-default`. Clusters must be configured for the Carbide registry ([docs](https://rancherfederal.github.io/carbide-docs/docs/registry-docs/kubernetes-config)).
 
 ### Fleet Local and Fleet Default
 

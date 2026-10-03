@@ -189,6 +189,7 @@ spec:
     clusterSelector:
       matchLabels:
         kubewarden: enabled
+---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
@@ -204,3 +205,53 @@ spec:
     clusterSelector:
       matchLabels:
         kubewarden: enabled
+---
+### Rancher Government Carbide
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: compliance-crd
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/rancher-compliance-crd
+  targets:
+  - name: carbide
+    clusterSelector:
+      matchLabels:
+        carbide: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: compliance
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/rancher-compliance
+  targets:
+  - name: carbide
+    clusterSelector:
+      matchLabels:
+        carbide: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: stig-profiles
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  helmSecretName: registry-creds
+  paths:
+    - /fleet/rgs-stig-profiles
+  targets:
+  - name: carbide
+    clusterSelector:
+      matchLabels:
+        carbide: enabled

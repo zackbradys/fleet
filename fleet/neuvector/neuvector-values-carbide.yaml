@@ -14,3 +14,15 @@ manager:
     type: ClusterIP
 rbac: true
 registry: registry.ranchercarbide.dev
+
+enforcer:
+  tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/etcd
+    - effect: NoSchedule
+      key: nvidia.com/gpu
+      operator: Exists

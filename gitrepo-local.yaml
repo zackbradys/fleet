@@ -242,6 +242,23 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
+  name: stig-profiles
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  helmSecretName: registry-creds
+  paths:
+    - /fleet/rgs-stig-profiles
+  targets:
+  - name: carbide
+    clusterSelector:
+      matchLabels:
+        carbide: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
   name: airgapped-docs
   namespace: fleet-local
 spec:
