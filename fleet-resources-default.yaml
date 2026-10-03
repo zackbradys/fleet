@@ -206,7 +206,6 @@ spec:
       matchLabels:
         kubewarden: enabled
 ---
-### Rancher Government Carbide
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
@@ -248,7 +247,7 @@ spec:
   repo: https://github.com/zackbradys/fleet
   branch: main
   helmSecretName: registry-creds
-  helmRepoURLRegex: 'registry\.ranchercarbide\.dev'
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
   paths:
     - /fleet/rgs-stig-profiles
   targets:

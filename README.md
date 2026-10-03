@@ -18,10 +18,10 @@ All images and charts that Carbide provides come from `registry.ranchercarbide.d
 
 ```bash
 ### Adds the GitRepo(s) to the local cluster.
-kubectl apply -f https://raw.githubusercontent.com/zackbradys/fleet/main/gitrepo-local.yaml
+kubectl apply -f https://raw.githubusercontent.com/zackbradys/fleet/main/fleet-resources-local.yaml
 
 ### Adds the GitRepo(s) to all downstream cluster(s).
-kubectl apply -f https://raw.githubusercontent.com/zackbradys/fleet/main/gitrepo-default.yaml
+kubectl apply -f https://raw.githubusercontent.com/zackbradys/fleet/main/fleet-resources-default.yaml
 ```
 
 ### Carbide Without Fleet (Optional)
