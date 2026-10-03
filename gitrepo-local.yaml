@@ -248,6 +248,7 @@ spec:
   repo: https://github.com/zackbradys/fleet
   branch: main
   helmSecretName: registry-creds
+  helmRepoURLRegex: 'registry\.ranchercarbide\.dev'
   paths:
     - /fleet/rgs-stig-profiles
   targets:
