@@ -1,0 +1,8 @@
+defaultNamespace: cnpg-system
+
+helm:
+  releaseName: cloudnative-pg
+  repo: oci://registry.ranchercarbide.dev/charts/cloudnative-pg
+  version: 0.29.1
+  valuesFiles:
+    - cloudnative-pg-values-carbide.yaml

@@ -1,0 +1,22 @@
+defaultNamespace: fleet-default
+
+helm:
+  releaseName: ai-cluster
+  repo: https://ranchergovernment.github.io/rancher-cluster-templates
+  chart: rancher-cluster-templates
+  version: 0.8.1
+  valuesFrom:
+    - secretKeyRef:
+        name: ai-cluster-config
+        namespace: fleet-default
+        key: values.yaml
+    - secretKeyRef:
+        name: ai-cluster-values
+        namespace: fleet-default
+        key: values.yaml
+
+downstreamResources:
+  - kind: Secret
+    name: ai-cluster-config
+  - kind: Secret
+    name: ai-cluster-values

@@ -1,0 +1,15 @@
+defaultNamespace: ollama
+
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: baseline
+
+helm:
+  releaseName: ollama-0
+  repo: oci://registry.ranchercarbide.dev/charts/ollama
+  version: 1.76.0
+  valuesFiles:
+    - ollama-values-carbide.yaml
+
+dependsOn:
+  - name: longhorn-fleet-longhorn
+  - name: ai-gpu-operator-fleet-gpu-operator

@@ -1,0 +1,14 @@
+defaultNamespace: milvus
+
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: baseline
+
+helm:
+  releaseName: milvus
+  repo: oci://registry.ranchercarbide.dev/charts/milvus
+  version: 5.0.25
+  valuesFiles:
+    - milvus-values-carbide.yaml
+
+dependsOn:
+  - name: longhorn-fleet-longhorn

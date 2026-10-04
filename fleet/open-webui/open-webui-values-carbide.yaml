@@ -1,0 +1,132 @@
+global:
+  imageRegistry: registry.ranchercarbide.dev
+  tls:
+    source: secret
+
+ollama:
+  enabled: false
+ollamaUrls:
+  - http://ollama-0.ollama.svc.cluster.local:11434
+pipelines:
+  enabled: false
+tika:
+  enabled: true
+
+enableOpenaiApi: true
+openaiBaseApiUrl: http://litellm.litellm.svc.cluster.local:4000/v1
+openaiApiKey: ""
+
+ingress:
+  enabled: true
+  class: traefik
+  host: '${ get .ClusterLabels "ai-webui-host" }'
+  tls: true
+  existingSecret: open-webui-tls
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: null
+    traefik.ingress.kubernetes.io/router.middlewares: open-webui-https-redirect@kubernetescrd
+service:
+  type: ClusterIP
+
+persistence:
+  enabled: true
+  size: 10Gi
+
+extraEnvFrom:
+  - secretRef:
+      name: ai-open-webui
+
+extraEnvVars:
+  - name: WEBUI_NAME
+    value: RGS AI
+  - name: WEBUI_URL
+    value: 'https://${ get .ClusterLabels "ai-webui-host" }'
+  - name: ENABLE_SIGNUP
+    value: "False"
+  - name: ENABLE_INITIAL_ADMIN_SIGNUP
+    value: "True"
+  - name: DEFAULT_MODELS
+    value: gpt-oss:120b,gpt-oss-120b-bedrock
+  - name: VECTOR_DB
+    value: milvus
+  - name: MILVUS_URI
+    value: http://milvus.milvus.svc.cluster.local:19530
+  - name: RAG_EMBEDDING_ENGINE
+    value: ollama
+  - name: RAG_EMBEDDING_MODEL
+    value: nomic-embed-text
+  - name: RAG_OLLAMA_BASE_URL
+    value: http://ollama-0.ollama.svc.cluster.local:11434
+  - name: RAG_TOP_K
+    value: "10"
+  - name: WEBUI_BANNERS
+    value: '[{"id": "classification", "type": "success", "title": "", "content": "UNCLASSIFIED", "dismissible": false, "timestamp": 1759406400}]'
+
+extraResources:
+  - apiVersion: cert-manager.io/v1
+    kind: ClusterIssuer
+    metadata:
+      name: letsencrypt-production
+    spec:
+      acme:
+        server: https://acme-v02.api.letsencrypt.org/directory
+        email: zack.brady@ranchergovernment.com
+        privateKeySecretRef:
+          name: letsencrypt-production
+        solvers:
+          - dns01:
+              route53:
+                region: '${ get .ClusterLabels "ai-aws-region" }'
+  - apiVersion: cert-manager.io/v1
+    kind: Certificate
+    metadata:
+      name: open-webui-tls
+    spec:
+      issuerRef:
+        name: letsencrypt-production
+        kind: ClusterIssuer
+      secretName: open-webui-tls
+      commonName: '${ get .ClusterLabels "ai-webui-host" }'
+      dnsNames:
+        - '${ get .ClusterLabels "ai-webui-host" }'
+  - apiVersion: batch/v1
+    kind: Job
+    metadata:
+      name: open-webui-admin-bootstrap
+    spec:
+      backoffLimit: 20
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: bootstrap
+              image: registry.ranchercarbide.dev/containers/open-webui:0.6.41-14.20
+              command:
+                - python3.11
+                - -c
+                - |
+                  import os, time, requests
+                  url = "http://open-webui.open-webui.svc.cluster.local"
+                  creds = {"email": os.environ["WEBUI_ADMIN_EMAIL"], "password": os.environ["WEBUI_ADMIN_PASSWORD"]}
+                  while True:
+                      try:
+                          if requests.get(url + "/health", timeout=5).ok: break
+                      except requests.RequestException: pass
+                      time.sleep(2)
+                  r = requests.post(url + "/api/v1/auths/signin", json=creds, headers={"Accept-Encoding": "gzip, deflate"}, timeout=30)
+                  if r.ok:
+                      print("admin already exists"); raise SystemExit(0)
+                  r = requests.post(url + "/api/v1/auths/signup", json={"name": "RGS AI Admin", **creds}, headers={"Accept-Encoding": "gzip, deflate"}, timeout=30)
+                  r.raise_for_status()
+                  print("admin created, role:", r.json().get("role"))
+              envFrom:
+                - secretRef:
+                    name: ai-open-webui
+  - apiVersion: traefik.io/v1alpha1
+    kind: Middleware
+    metadata:
+      name: https-redirect
+    spec:
+      redirectScheme:
+        scheme: https
+        permanent: true

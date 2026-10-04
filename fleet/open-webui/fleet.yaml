@@ -1,0 +1,37 @@
+defaultNamespace: open-webui
+
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: baseline
+
+helm:
+  releaseName: open-webui
+  repo: oci://registry.ranchercarbide.dev/charts/open-webui
+  version: 8.19.1
+  valuesFiles:
+    - open-webui-values-carbide.yaml
+
+dependsOn:
+  - name: cert-manager-fleet-cert-manager
+  - name: ai-milvus-fleet-milvus
+  - name: ai-litellm-fleet-litellm
+
+targetCustomizations:
+  - name: two-gpu-nodes
+    clusterSelector:
+      matchLabels:
+        ai-gpu-nodes: "2"
+    helm:
+      values:
+        ollamaUrls:
+          - http://ollama-0.ollama.svc.cluster.local:11434
+          - http://ollama-1.ollama.svc.cluster.local:11434
+  - name: three-gpu-nodes
+    clusterSelector:
+      matchLabels:
+        ai-gpu-nodes: "3"
+    helm:
+      values:
+        ollamaUrls:
+          - http://ollama-0.ollama.svc.cluster.local:11434
+          - http://ollama-1.ollama.svc.cluster.local:11434
+          - http://ollama-2.ollama.svc.cluster.local:11434

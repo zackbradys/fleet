@@ -1,0 +1,10 @@
+driver:
+  enabled: true
+  repository: registry.ranchercarbide.dev/third-party/nvidia
+  image: driver
+  version: "595"
+  usePrecompiled: true
+toolkit:
+  env:
+    - name: CONTAINERD_SOCKET
+      value: /run/k3s/containerd/containerd.sock

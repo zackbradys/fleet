@@ -255,3 +255,107 @@ spec:
     clusterSelector:
       matchLabels:
         carbide: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: ai-gpu-operator
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/gpu-operator
+  targets:
+  - name: ai
+    clusterSelector:
+      matchLabels:
+        ai: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: ai-cloudnative-pg
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
+  paths:
+    - /fleet/cloudnative-pg
+  targets:
+  - name: ai
+    clusterSelector:
+      matchLabels:
+        ai: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: ai-milvus
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
+  paths:
+    - /fleet/milvus
+  targets:
+  - name: ai
+    clusterSelector:
+      matchLabels:
+        ai: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: ai-ollama
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
+  paths:
+    - /fleet/ollama
+  targets:
+  - name: ai
+    clusterSelector:
+      matchLabels:
+        ai: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: ai-litellm
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/litellm
+  targets:
+  - name: ai
+    clusterSelector:
+      matchLabels:
+        ai: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: ai-open-webui
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
+  paths:
+    - /fleet/open-webui
+  targets:
+  - name: ai
+    clusterSelector:
+      matchLabels:
+        ai: enabled

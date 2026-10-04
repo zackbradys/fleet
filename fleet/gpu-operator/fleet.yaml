@@ -1,0 +1,12 @@
+defaultNamespace: gpu-operator
+
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: privileged
+
+helm:
+  releaseName: gpu-operator
+  repo: https://helm.ngc.nvidia.com/nvidia
+  chart: gpu-operator
+  version: v26.7.1
+  valuesFiles:
+    - gpu-operator-values-carbide.yaml

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: litellm-config
+data:
+  config.yaml: |
+    model_list:
+      - model_name: gpt-oss-120b-bedrock
+        litellm_params:
+          model: bedrock/converse/us-gov.openai.gpt-oss-120b-1:0
+          aws_region_name: os.environ/AWS_REGION
+      - model_name: claude-sonnet-5-5-bedrock
+        litellm_params:
+          model: bedrock/converse/us-gov.anthropic.claude-sonnet-5-5
+          aws_region_name: os.environ/AWS_REGION
+
+    litellm_settings:
+      drop_params: true
+
+    general_settings:
+      master_key: os.environ/LITELLM_MASTER_KEY

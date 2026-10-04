@@ -2,6 +2,9 @@ global:
   cattle:
     systemDefaultRegistry: registry.ranchercarbide.dev
 
+persistence:
+  defaultDataLocality: best-effort
+
 defaultSettings:
   taintToleration: nvidia.com/gpu=true:NoSchedule
 longhornManager:

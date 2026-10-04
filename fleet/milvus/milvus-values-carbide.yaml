@@ -1,0 +1,18 @@
+global:
+  imageRegistry: registry.ranchercarbide.dev
+cluster:
+  enabled: false
+standalone:
+  messageQueue: woodpecker
+kafka:
+  enabled: false
+etcd:
+  replicaCount: 1
+minio:
+  mode: standalone
+  replicas: 1
+  deploymentUpdate:
+    type: Recreate
+  resources:
+    requests:
+      memory: 1Gi

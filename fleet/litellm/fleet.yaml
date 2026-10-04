@@ -1,0 +1,4 @@
+defaultNamespace: litellm
+
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: baseline

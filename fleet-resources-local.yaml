@@ -336,6 +336,22 @@ spec:
       matchLabels:
         ui-extensions: enabled
 ---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: ai-cluster
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/ai-cluster
+  targets:
+  - name: ai
+    clusterSelector:
+      matchLabels:
+        ai: enabled
+---
 apiVersion: catalog.cattle.io/v1
 kind: ClusterRepo
 metadata:

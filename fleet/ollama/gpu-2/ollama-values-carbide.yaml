@@ -1,0 +1,48 @@
+global:
+  imageRegistry: registry.ranchercarbide.dev
+ollama:
+  gpu:
+    enabled: true
+    type: nvidia
+    number: 4
+  models:
+    pull:
+      - gpt-oss:120b
+      - nomic-embed-text
+runtimeClassName: nvidia
+nodeSelector:
+  rgs.ai/gpu: nvidia
+podLabels:
+  rgs.ai/ollama: "true"
+extraEnv:
+  - name: OLLAMA_KEEP_ALIVE
+    value: "-1"
+  - name: OLLAMA_MAX_LOADED_MODELS
+    value: "2"
+resources:
+  requests:
+    cpu: "8"
+    memory: 96Gi
+persistentVolume:
+  enabled: true
+  size: 250Gi
+  storageClass: longhorn
+initContainers:
+  - name: models-from-s3
+    image: registry.ranchercarbide.dev/containers/aws-cli:2.37.7
+    command:
+      - sh
+      - -c
+      - |
+        if [ -z "$AI_MODELS_BUCKET" ]; then echo "no models bucket configured, skipping"; exit 0; fi
+        aws configure set default.s3.max_concurrent_requests 64
+        aws configure set default.s3.multipart_chunksize 64MB
+        echo "syncing s3://$AI_MODELS_BUCKET/$AI_MODELS_PREFIX"
+        aws s3 sync "s3://$AI_MODELS_BUCKET/$AI_MODELS_PREFIX" /root/.ollama/models --only-show-errors
+        echo "models synced"
+    envFrom:
+      - secretRef:
+          name: ai-aws
+    volumeMounts:
+      - name: ollama-data
+        mountPath: /root/.ollama
