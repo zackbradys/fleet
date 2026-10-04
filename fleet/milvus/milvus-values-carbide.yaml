@@ -13,6 +13,8 @@ minio:
   replicas: 1
   deploymentUpdate:
     type: Recreate
+  persistence:
+    size: 50Gi
   resources:
     requests:
       memory: 1Gi
