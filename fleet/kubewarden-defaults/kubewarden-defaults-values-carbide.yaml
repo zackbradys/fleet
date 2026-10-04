@@ -1,4 +1,4 @@
 global:
   cattle:
     systemDefaultRegistry: registry.ranchercarbide.dev
-    url: https://rancher.gov.ranchergov.io
+    url: '${ if hasKey .ClusterLabels "server-url" }https://${ get .ClusterLabels "server-url" }${ end }'

@@ -6,7 +6,7 @@ controller:
     enabled: true
 global:
   cattle:
-    url: https://rancher.gov.ranchergov.io
+    url: '${ if hasKey .ClusterLabels "server-url" }https://${ get .ClusterLabels "server-url" }${ end }'
 k3s:
   enabled: true
 manager:
