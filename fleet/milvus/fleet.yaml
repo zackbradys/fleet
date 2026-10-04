@@ -9,6 +9,3 @@ helm:
   version: 5.0.25
   valuesFiles:
     - milvus-values-carbide.yaml
-
-dependsOn:
-  - name: longhorn-fleet-longhorn

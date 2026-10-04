@@ -46,7 +46,7 @@ extraEnvVars:
   - name: ENABLE_INITIAL_ADMIN_SIGNUP
     value: "True"
   - name: DEFAULT_MODELS
-    value: gpt-oss:120b,gpt-oss-120b-bedrock
+    value: gpt-oss:120b
   - name: VECTOR_DB
     value: milvus
   - name: MILVUS_URI

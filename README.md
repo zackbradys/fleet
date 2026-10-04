@@ -36,7 +36,7 @@ Labeling the `local` cluster `ai=enabled` makes Rancher build a GPU-backed AI cl
 | `cloudnative-pg` | CloudNativePG, the PostgreSQL operator |
 | `milvus` | Milvus, the vector database for document search |
 | `ollama` | Ollama, one per GPU node, with `gpt-oss:120b` and `nomic-embed-text` |
-| `litellm` | LiteLLM, the gateway to `gpt-oss-120b` and Claude Sonnet 5.5 on Amazon Bedrock |
+| `litellm` | LiteLLM, the gateway to hosted models such as Amazon Bedrock. The model list comes from the environment (below) |
 | `open-webui` | Open WebUI with Apache Tika, behind Traefik with a Let's Encrypt certificate |
 
 The `ai-cluster` bundle has no values of its own. It reads two secrets that you create in `fleet-local` (key `values.yaml`), merged in this order:
@@ -44,7 +44,7 @@ The `ai-cluster` bundle has no values of its own. It reads two secrets that you 
 2. **`ai-cluster-values`:** the environment:
    - **Node pools:** VPC, subnets, security group, AMI, IAM instance profile, and node userData.
    - **Cluster labels:** `ai-gpu-nodes`, `ai-webui-host`, and `ai-aws-region`.
-   - **`additionalManifests`:** create each app's namespace with its Pod Security label, and the secrets the apps read: `ai-aws` (in `ollama`), `ai-litellm` (in `litellm`), and `ai-open-webui` (in `open-webui`).
+   - **`additionalManifests`:** create each app's namespace with its Pod Security label, and the secrets the apps read: `ai-aws` (in `ollama`), `ai-litellm` (in `litellm`), and `ai-open-webui` (in `open-webui`), and the `ai-litellm-models` ConfigMap (in `litellm`, key `models.yaml`) with LiteLLM's `model_list`.
 
 The bundle lists both secrets as `downstreamResources`: Fleet copies them into `fleet-default` for the chart, and watches them, so changing either one redeploys the cluster template.
 

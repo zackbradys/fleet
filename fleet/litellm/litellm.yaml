@@ -46,8 +46,12 @@ spec:
               readOnly: true
       volumes:
         - name: config
-          configMap:
-            name: litellm-config
+          projected:
+            sources:
+              - configMap:
+                  name: litellm-config
+              - configMap:
+                  name: ai-litellm-models
 ---
 apiVersion: v1
 kind: Service

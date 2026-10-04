@@ -4,18 +4,52 @@ metadata:
   name: litellm-config
 data:
   config.yaml: |
-    model_list:
-      - model_name: gpt-oss-120b-bedrock
-        litellm_params:
-          model: bedrock/converse/us-gov.openai.gpt-oss-120b-1:0
-          aws_region_name: os.environ/AWS_REGION
-      - model_name: claude-sonnet-5-5-bedrock
-        litellm_params:
-          model: bedrock/converse/us-gov.anthropic.claude-sonnet-5-5
-          aws_region_name: os.environ/AWS_REGION
+    include:
+      - models.yaml
 
     litellm_settings:
       drop_params: true
+      callbacks: strip_reasoning.handler
 
     general_settings:
       master_key: os.environ/LITELLM_MASTER_KEY
+  strip_reasoning.py: |
+    import re
+
+    from litellm.integrations.custom_logger import CustomLogger
+
+    TAGS = [
+        ("<think>", "</think>"),
+        ("<thinking>", "</thinking>"),
+        ("<reason>", "</reason>"),
+        ("<reasoning>", "</reasoning>"),
+        ("<thought>", "</thought>"),
+        ("<Thought>", "</Thought>"),
+        ("<|begin_of_thought|>", "<|end_of_thought|>"),
+        ("◁think▷", "◁/think▷"),
+    ]
+    REASONING = re.compile("|".join(f"{re.escape(start)}.*?{re.escape(end)}" for start, end in TAGS), re.DOTALL)
+
+
+    def strip(text):
+        return REASONING.sub("", text).strip()
+
+
+    class StripReasoning(CustomLogger):
+        async def async_pre_call_hook(self, user_api_key_dict, cache, data, call_type):
+            for message in data.get("messages") or []:
+                if not isinstance(message, dict) or message.get("role") != "assistant":
+                    continue
+                content = message.get("content")
+                if isinstance(content, str):
+                    stripped = strip(content)
+                    if stripped or message.get("tool_calls"):
+                        message["content"] = stripped
+                elif isinstance(content, list):
+                    for part in content:
+                        if isinstance(part, dict) and isinstance(part.get("text"), str):
+                            part["text"] = strip(part["text"])
+            return data
+
+
+    handler = StripReasoning()

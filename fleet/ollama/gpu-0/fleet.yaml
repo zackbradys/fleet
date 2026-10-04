@@ -11,5 +11,4 @@ helm:
     - ollama-values-carbide.yaml
 
 dependsOn:
-  - name: longhorn-fleet-longhorn
   - name: ai-gpu-operator-fleet-gpu-operator

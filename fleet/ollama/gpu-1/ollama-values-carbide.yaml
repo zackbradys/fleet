@@ -26,7 +26,6 @@ resources:
 persistentVolume:
   enabled: true
   size: 200Gi
-  storageClass: longhorn
 initContainers:
   - name: models-from-s3
     image: registry.ranchercarbide.dev/containers/aws-cli:2.37.7
