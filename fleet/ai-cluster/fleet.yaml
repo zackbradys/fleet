@@ -20,3 +20,11 @@ downstreamResources:
     name: ai-cluster-config
   - kind: Secret
     name: ai-cluster-values
+
+diff:
+  comparePatches:
+    - apiVersion: provisioning.cattle.io/v1
+      kind: Cluster
+      namespace: fleet-default
+      jsonPointers:
+        - /spec/rkeConfig/machineGlobalConfig/kube-apiserver-arg
