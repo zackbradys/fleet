@@ -1,10 +1,10 @@
 defaultNamespace: cattle-ui-plugin-system
 
 helm:
-  releaseName: kubewarden
+  releaseName: rancher-ai-ui
   repo: http://ui-plugin-catalog-svc.cattle-ui-plugin-system:8080
-  chart: kubewarden
-  version: 4.2.1
+  chart: rancher-ai-ui
+  version: 1.1.0
 
 dependsOn:
   - name: ui-plugin-catalog-fleet-ui-plugin-catalog

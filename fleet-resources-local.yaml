@@ -275,15 +275,17 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: neuvector-ui-extension
+  name: ui-plugin-catalog
   namespace: fleet-local
 spec:
   repo: https://github.com/zackbradys/fleet
   branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
   paths:
-    - /fleet/neuvector-ui-extension
+    - /fleet/ui-plugin-catalog
   targets:
-  - name: neuvector-ui-extension
+  - name: ui-plugin-catalog
     clusterSelector:
       matchLabels:
         ui-extensions: enabled
@@ -291,18 +293,18 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: kubewarden-ui-extension
+  name: capa-ui-extension
   namespace: fleet-local
 spec:
   repo: https://github.com/zackbradys/fleet
   branch: main
   paths:
-    - /fleet/kubewarden-ui-extension
+    - /fleet/capa-ui-extension
   targets:
-  - name: kubewarden-ui-extension
+  - name: capa-ui-extension
     clusterSelector:
       matchLabels:
-        ui-extensions: enabled
+        capa-ui-extension: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
@@ -318,7 +320,55 @@ spec:
   - name: elemental-ui-extension
     clusterSelector:
       matchLabels:
-        ui-extensions: enabled
+        elemental-ui-extension: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: harvester-ui-extension
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/harvester-ui-extension
+  targets:
+  - name: harvester-ui-extension
+    clusterSelector:
+      matchLabels:
+        harvester-ui-extension: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: kubewarden-ui-extension
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/kubewarden-ui-extension
+  targets:
+  - name: kubewarden-ui-extension
+    clusterSelector:
+      matchLabels:
+        kubewarden-ui-extension: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: neuvector-ui-extension
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/neuvector-ui-extension
+  targets:
+  - name: neuvector-ui-extension
+    clusterSelector:
+      matchLabels:
+        neuvector-ui-extension: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
@@ -334,7 +384,71 @@ spec:
   - name: observability-ui-extension
     clusterSelector:
       matchLabels:
-        ui-extensions: enabled
+        observability-ui-extension: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: rancher-ai-ui-extension
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/rancher-ai-ui-extension
+  targets:
+  - name: rancher-ai-ui-extension
+    clusterSelector:
+      matchLabels:
+        rancher-ai-ui-extension: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: supportability-review-ui-extension
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/supportability-review-ui-extension
+  targets:
+  - name: supportability-review-ui-extension
+    clusterSelector:
+      matchLabels:
+        supportability-review-ui-extension: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: virtual-clusters-ui-extension
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/virtual-clusters-ui-extension
+  targets:
+  - name: virtual-clusters-ui-extension
+    clusterSelector:
+      matchLabels:
+        virtual-clusters-ui-extension: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: vulnerability-scanner-ui-extension
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/vulnerability-scanner-ui-extension
+  targets:
+  - name: vulnerability-scanner-ui-extension
+    clusterSelector:
+      matchLabels:
+        vulnerability-scanner-ui-extension: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
@@ -351,22 +465,6 @@ spec:
     clusterSelector:
       matchLabels:
         ai: enabled
----
-apiVersion: catalog.cattle.io/v1
-kind: ClusterRepo
-metadata:
-  name: rancher-extensions
-spec:
-  gitBranch: main
-  gitRepo: https://github.com/rancher/ui-plugin-charts
----
-apiVersion: catalog.cattle.io/v1
-kind: ClusterRepo
-metadata:
-  name: rancher-partner-extensions
-spec:
-  gitBranch: main
-  gitRepo: https://github.com/rancher/partner-extensions
 ---
 apiVersion: catalog.cattle.io/v1
 kind: ClusterRepo

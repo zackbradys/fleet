@@ -1,0 +1,8 @@
+defaultNamespace: cattle-ui-plugin-system
+
+helm:
+  releaseName: ui-plugin-catalog
+  repo: oci://registry.ranchercarbide.dev/carbide-charts/ui-plugin-catalog
+  version: 4.47.0
+  valuesFiles:
+    - ui-plugin-catalog-values-carbide.yaml

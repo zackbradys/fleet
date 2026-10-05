@@ -2,8 +2,9 @@ defaultNamespace: cattle-ui-plugin-system
 
 helm:
   releaseName: elemental
-  repo: https://raw.githubusercontent.com/rancher/ui-plugin-charts/main
+  repo: http://ui-plugin-catalog-svc.cattle-ui-plugin-system:8080
   chart: elemental
-  version: 3.0.1
-  valuesFiles:
-    - elemental-ui-extension-values-carbide.yaml
+  version: 3.0.3
+
+dependsOn:
+  - name: ui-plugin-catalog-fleet-ui-plugin-catalog

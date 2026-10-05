@@ -1,3 +1,0 @@
-global:
-  cattle:
-    systemDefaultRegistry: registry.ranchercarbide.dev
