@@ -1,7 +1,7 @@
 defaultNamespace: cattle-ui-plugin-system
 
 helm:
-  releaseName: kubewarden-ui-extension
+  releaseName: kubewarden
   repo: https://raw.githubusercontent.com/rancher/ui-plugin-charts/main
   chart: kubewarden
   version: 4.0.2

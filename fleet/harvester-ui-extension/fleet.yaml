@@ -1,7 +1,7 @@
 defaultNamespace: cattle-ui-plugin-system
 
 helm:
-  releaseName: harvester-ui-extension
+  releaseName: harvester
   repo: https://raw.githubusercontent.com/rancher/ui-plugin-charts/main
   chart: harvester
   version: 1.5.1
