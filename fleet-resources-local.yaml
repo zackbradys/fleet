@@ -150,6 +150,8 @@ metadata:
 spec:
   repo: https://github.com/zackbradys/fleet
   branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
   paths:
     - /fleet/cert-manager
   targets:
@@ -245,7 +247,7 @@ spec:
     clusterSelector:
       matchLabels:
         cert-manager-csi-driver: enabled
-  - name: cert-manager-csi-driver
+  - name: runtime-enforcer
     clusterSelector:
       matchLabels:
         runtime-enforcer: enabled
@@ -267,7 +269,7 @@ spec:
     clusterSelector:
       matchLabels:
         cloudnative-pg: enabled
-  - name: cloudnative-pg
+  - name: vulnerability-scanner
     clusterSelector:
       matchLabels:
         vulnerability-scanner: enabled
@@ -407,14 +409,18 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: kubewarden-ui-extension
+  name: admission-controller-ui-extension
   namespace: fleet-local
 spec:
   repo: https://github.com/zackbradys/fleet
   branch: main
   paths:
-    - /fleet/kubewarden-ui-extension
+    - /fleet/admission-controller-ui-extension
   targets:
+  - name: admission-controller-ui-extension
+    clusterSelector:
+      matchLabels:
+        admission-controller-ui-extension: enabled
   - name: kubewarden-ui-extension
     clusterSelector:
       matchLabels:

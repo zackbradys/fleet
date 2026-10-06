@@ -150,6 +150,8 @@ metadata:
 spec:
   repo: https://github.com/zackbradys/fleet
   branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
   paths:
     - /fleet/cert-manager
   targets:
@@ -245,7 +247,7 @@ spec:
     clusterSelector:
       matchLabels:
         cert-manager-csi-driver: enabled
-  - name: cert-manager-csi-driver
+  - name: runtime-enforcer
     clusterSelector:
       matchLabels:
         runtime-enforcer: enabled

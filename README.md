@@ -12,10 +12,10 @@ All images and charts that Carbide provides come from `registry.ranchercarbide.d
 | **RGS Carbide** | | | | |
 | `carbide=enabled` | Compliance and STIG profiles: `rancher-compliance`, `rancher-compliance-crd`, `rgs-stig-profiles`, `airgapped-docs` | ✅ | ✅ | `airgapped-docs` is `local` only |
 | `ui-extensions=enabled` | RGS UI Plugin Catalog: `ui-plugin-catalog` | ✅ |  |  |
-| `<name>-ui-extension=enabled` | One UI extension from the catalog: `capa`, `elemental`, `harvester`, `kubewarden`, `neuvector`, `observability`, `rancher-ai`, `supportability-review`, `virtual-clusters`, or `vulnerability-scanner` | ✅ |  | Needs `ui-extensions=enabled` |
+| `<name>-ui-extension=enabled` | One UI extension from the catalog: `capa`, `elemental`, `harvester`, `admission-controller` (or `kubewarden`), `neuvector`, `observability`, `rancher-ai`, `supportability-review`, `virtual-clusters`, or `vulnerability-scanner` | ✅ |  | Needs `ui-extensions=enabled` |
 | **RGS Security** | | | | |
 | `admission-controller=enabled` | RGS Security Admission Controller: `admission-controller`, with Policy Reporter | ✅ | ✅ | Use this or `kubewarden=enabled`, not both |
-| `kubewarden=enabled` | Kubewarden: `kubewarden` (the open source `admission-controller` chart with RGS Carbide images), with Policy Reporter | ✅ | ✅ | Use this or `admission-controller=enabled`, not both |
+| `kubewarden=enabled` | Kubewarden: `kubewarden` (the open source `admission-controller` chart with RGS Carbide images), with Policy Reporter | ✅ | ✅ | Use this or `admission-controller=enabled`, not both. The Policy Reporter page needs `admission-controller` |
 | `vulnerability-scanner=enabled` | RGS Security Vulnerability Scanner: `vulnerability-scanner`, plus `cloudnative-pg` | ✅ | ✅ | Needs `cert-manager` |
 | `runtime-enforcer=enabled` | RGS Security Runtime Enforcer: `runtime-enforcer`, plus `cert-manager-csi-driver` | ✅ | ✅ | Needs `cert-manager` |
 | **RGS AI Stack** | | | | |

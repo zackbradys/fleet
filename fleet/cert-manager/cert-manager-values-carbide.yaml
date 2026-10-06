@@ -1,16 +1,4 @@
 crds:
   enabled: true
-acmesolver:
-  image:
-    repository: registry.ranchercarbide.dev/jetstack/cert-manager-acmesolver
-cainjector:
-  image:
-    repository: registry.ranchercarbide.dev/jetstack/cert-manager-cainjector
-image:
-  repository: registry.ranchercarbide.dev/jetstack/cert-manager-controller
-startupapicheck:
-  image:
-    repository: registry.ranchercarbide.dev/jetstack/cert-manager-startupapicheck
-webhook:
-  image:
-    repository: registry.ranchercarbide.dev/jetstack/cert-manager-webhook
+global:
+  imageRegistry: registry.ranchercarbide.dev
