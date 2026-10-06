@@ -26,11 +26,11 @@ spec:
           - bash
           - -c
           - *cmd
-        image: alpine:3.12
+        image: registry.ranchercarbide.dev/rancher/mirrored-library-busybox:1.36.1
         securityContext:
           privileged: true
       containers:
       - name: sleep
-        image: registry.k8s.io/pause:3.1
+        image: registry.ranchercarbide.dev/rancher/mirrored-pause:3.10
   updateStrategy:
     type: RollingUpdate
