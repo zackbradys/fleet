@@ -15,19 +15,20 @@ All images and charts that Carbide provides come from `registry.ranchercarbide.d
 | `<name>-ui-extension=enabled` | One UI extension from the catalog: `capa`, `elemental`, `harvester`, `admission-controller` (or `kubewarden`), `neuvector`, `observability`, `rancher-ai`, `supportability-review`, `virtual-clusters`, or `vulnerability-scanner` | ✅ |  | Needs `ui-extensions=enabled` |
 | **RGS Security** | | | | |
 | `admission-controller=enabled` | RGS Security Admission Controller: `admission-controller`, with Policy Reporter | ✅ | ✅ | Use this or `kubewarden=enabled`, not both |
-| `kubewarden=enabled` | Kubewarden: `kubewarden` (the open source `admission-controller` chart with RGS Carbide images), with Policy Reporter | ✅ | ✅ | Use this or `admission-controller=enabled`, not both. The Policy Reporter page needs `admission-controller` |
 | `vulnerability-scanner=enabled` | RGS Security Vulnerability Scanner: `vulnerability-scanner`, plus `cloudnative-pg` | ✅ | ✅ | Needs `cert-manager` |
 | `runtime-enforcer=enabled` | RGS Security Runtime Enforcer: `runtime-enforcer`, plus `cert-manager-csi-driver` | ✅ | ✅ | Needs `cert-manager` |
+| **RGS Storage** | | | | |
+| `longhorn=enabled` | Longhorn: `longhorn`, `longhorn-crd`, `longhorn-configs` | ✅ | ✅ | Default storage class |
 | **RGS AI Stack** | | | | |
 | `ai=enabled` | On `local`: `ai-cluster`, which builds the AI cluster. On the AI cluster: `gpu-operator`, `cloudnative-pg`, `milvus`, `ollama`, `litellm`, `open-webui` | ✅ | ✅ | See [RGS AI Stack](#rgs-ai-stack) |
 | **Platform Apps** | | | | |
-| `longhorn=enabled` | Longhorn: `longhorn`, `longhorn-crd`, `longhorn-configs` | ✅ | ✅ | Default storage class |
-| `neuvector=enabled` | NeuVector: `neuvector`, `neuvector-crd` | ✅ | ✅ |  |
+| `cert-manager=enabled` | cert-manager: `cert-manager` | ✅ | ✅ | The `local` cluster usually has `cert-manager` from Rancher's install |
+| `cert-manager-csi-driver=enabled` | cert-manager CSI driver: `cert-manager-csi-driver` | ✅ | ✅ | Also installed by `runtime-enforcer=enabled` |
 | `monitoring=enabled` | Monitoring: `kube-prometheus-stack`, `rancher-monitoring-dashboards` | ✅ | ✅ | `rancher-monitoring` is deprecated in Rancher 2.15 |
 | `logging=enabled` | Logging: `rancher-logging`, `rancher-logging-crd` | ✅ | ✅ |  |
-| `cert-manager=enabled` | cert-manager: `cert-manager` | ✅ | ✅ | The `local` cluster usually has `cert-manager` from Rancher's install |
+| `neuvector=enabled` | NeuVector: `neuvector`, `neuvector-crd` | ✅ | ✅ |  |
+| `kubewarden=enabled` | Kubewarden: `kubewarden` (the open source `admission-controller` chart with RGS Carbide images), with Policy Reporter | ✅ | ✅ | Use this or `admission-controller=enabled`, not both. The Policy Reporter page needs `admission-controller` |
 | `cloudnative-pg=enabled` | CloudNativePG operator: `cloudnative-pg` | ✅ | ✅ | Also installed by `vulnerability-scanner=enabled` |
-| `cert-manager-csi-driver=enabled` | cert-manager CSI driver: `cert-manager-csi-driver` | ✅ | ✅ | Also installed by `runtime-enforcer=enabled` |
 
 
 ## Fleet Local and Fleet Default
