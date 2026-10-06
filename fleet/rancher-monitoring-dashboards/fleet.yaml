@@ -9,4 +9,4 @@ helm:
     - rancher-monitoring-dashboards-values-carbide.yaml
 
 dependsOn:
-  - name: monitoring-fleet-kube-prometheus-stack
+  - name: kube-prometheus-stack-fleet-kube-prometheus-stack

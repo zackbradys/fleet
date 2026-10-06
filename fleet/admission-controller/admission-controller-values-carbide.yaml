@@ -1,0 +1,4 @@
+global:
+  imageRegistry: registry.ranchercarbide.dev
+auditScanner:
+  policyReporter: true

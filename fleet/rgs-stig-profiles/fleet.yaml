@@ -1,10 +1,10 @@
 defaultNamespace: compliance-operator-system
 
 helm:
-  releaseName: rgs-stig-profile
+  releaseName: rgs-stig-profiles
   repo: oci://registry.ranchercarbide.dev/carbide-charts/rgs-stig-profiles
   version: 2.15.2
 
 dependsOn:
-  - name: compliance-crd-fleet-rancher-compliance-crd
-  - name: compliance-fleet-rancher-compliance
+  - name: rancher-compliance-crd-fleet-rancher-compliance-crd
+  - name: rancher-compliance-fleet-rancher-compliance

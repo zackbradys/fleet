@@ -1,4 +1,4 @@
-defaultNamespace: gpu-operator
+defaultNamespace: cert-manager-csi-driver
 
 namespaceLabels:
   pod-security.kubernetes.io/audit: privileged
@@ -9,9 +9,8 @@ namespaceLabels:
   pod-security.kubernetes.io/warn-version: latest
 
 helm:
-  releaseName: gpu-operator
-  repo: https://helm.ngc.nvidia.com/nvidia
-  chart: gpu-operator
-  version: v26.7.1
+  releaseName: cert-manager-csi-driver
+  repo: oci://registry.ranchercarbide.dev/charts/cert-manager-csi-driver
+  version: 0.16.0
   valuesFiles:
-    - gpu-operator-values-carbide.yaml
+    - cert-manager-csi-driver-values-carbide.yaml

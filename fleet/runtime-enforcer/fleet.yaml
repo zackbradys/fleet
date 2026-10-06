@@ -1,4 +1,4 @@
-defaultNamespace: gpu-operator
+defaultNamespace: cattle-runtime-enforcer-system
 
 namespaceLabels:
   pod-security.kubernetes.io/audit: privileged
@@ -9,9 +9,11 @@ namespaceLabels:
   pod-security.kubernetes.io/warn-version: latest
 
 helm:
-  releaseName: gpu-operator
-  repo: https://helm.ngc.nvidia.com/nvidia
-  chart: gpu-operator
-  version: v26.7.1
+  releaseName: ssre
+  repo: oci://registry.ranchercarbide.dev/charts/suse-security-runtime-enforcer
+  version: 0.2.1
   valuesFiles:
-    - gpu-operator-values-carbide.yaml
+    - runtime-enforcer-values-carbide.yaml
+
+dependsOn:
+  - name: cert-manager-csi-driver-fleet-cert-manager-csi-driver

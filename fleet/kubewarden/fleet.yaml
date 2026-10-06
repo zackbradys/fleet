@@ -2,8 +2,9 @@ defaultNamespace: cattle-kubewarden-system
 
 helm:
   releaseName: kubewarden
+  takeOwnership: true
   repo: https://charts.kubewarden.io
-  chart: kubewarden-controller
-  version: 5.14.1
+  chart: admission-controller
+  version: 6.1.0
   valuesFiles:
     - kubewarden-values-carbide.yaml

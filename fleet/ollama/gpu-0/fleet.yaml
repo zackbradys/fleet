@@ -11,4 +11,4 @@ helm:
     - ollama-values-carbide.yaml
 
 dependsOn:
-  - name: ai-gpu-operator-fleet-gpu-operator
+  - name: gpu-operator-fleet-gpu-operator

@@ -9,4 +9,4 @@ helm:
     - rancher-logging-values-carbide.yaml
 
 dependsOn:
-  - name: logging-crd-fleet-rancher-logging-crd
+  - name: rancher-logging-crd-fleet-rancher-logging-crd

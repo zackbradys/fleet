@@ -1,0 +1,9 @@
+defaultNamespace: cattle-kubewarden-system
+
+helm:
+  releaseName: admission-controller
+  takeOwnership: true
+  repo: oci://registry.ranchercarbide.dev/charts/suse-security-admission-controller
+  version: 1.1.0
+  valuesFiles:
+    - admission-controller-values-carbide.yaml

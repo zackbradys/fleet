@@ -9,4 +9,4 @@ helm:
     - rancher-compliance-values-carbide.yaml
 
 dependsOn:
-  - name: compliance-crd-fleet-rancher-compliance-crd
+  - name: rancher-compliance-crd-fleet-rancher-compliance-crd

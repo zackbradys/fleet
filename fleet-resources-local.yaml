@@ -81,7 +81,7 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: monitoring
+  name: kube-prometheus-stack
   namespace: fleet-local
 spec:
   repo: https://github.com/zackbradys/fleet
@@ -89,7 +89,7 @@ spec:
   paths:
     - /fleet/kube-prometheus-stack
   targets:
-  - name: monitoring
+  - name: kube-prometheus-stack
     clusterSelector:
       matchLabels:
         monitoring: enabled
@@ -97,7 +97,7 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: monitoring-dashboards
+  name: rancher-monitoring-dashboards
   namespace: fleet-local
 spec:
   repo: https://github.com/zackbradys/fleet
@@ -105,7 +105,7 @@ spec:
   paths:
     - /fleet/rancher-monitoring-dashboards
   targets:
-  - name: monitoring
+  - name: kube-prometheus-stack
     clusterSelector:
       matchLabels:
         monitoring: enabled
@@ -113,7 +113,7 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: logging-crd
+  name: rancher-logging-crd
   namespace: fleet-local
 spec:
   repo: https://github.com/zackbradys/fleet
@@ -121,7 +121,7 @@ spec:
   paths:
     - /fleet/rancher-logging-crd
   targets:
-  - name: logging
+  - name: rancher-logging
     clusterSelector:
       matchLabels:
         logging: enabled
@@ -129,7 +129,7 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: logging
+  name: rancher-logging
   namespace: fleet-local
 spec:
   repo: https://github.com/zackbradys/fleet
@@ -137,7 +137,7 @@ spec:
   paths:
     - /fleet/rancher-logging
   targets:
-  - name: logging
+  - name: rancher-logging
     clusterSelector:
       matchLabels:
         logging: enabled
@@ -161,18 +161,20 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: kubewarden-crds
+  name: admission-controller
   namespace: fleet-local
 spec:
   repo: https://github.com/zackbradys/fleet
   branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
   paths:
-    - /fleet/kubewarden-crds
+    - /fleet/admission-controller
   targets:
-  - name: kubewarden-crds
+  - name: admission-controller
     clusterSelector:
       matchLabels:
-        kubewarden: enabled
+        admission-controller: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
@@ -193,23 +195,87 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: kubewarden-defaults
+  name: vulnerability-scanner
   namespace: fleet-local
 spec:
   repo: https://github.com/zackbradys/fleet
   branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
   paths:
-    - /fleet/kubewarden-defaults
+    - /fleet/vulnerability-scanner
   targets:
-  - name: kubewarden-defaults
+  - name: vulnerability-scanner
     clusterSelector:
       matchLabels:
-        kubewarden: enabled
+        vulnerability-scanner: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: compliance-crd
+  name: runtime-enforcer
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
+  paths:
+    - /fleet/runtime-enforcer
+  targets:
+  - name: runtime-enforcer
+    clusterSelector:
+      matchLabels:
+        runtime-enforcer: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: cert-manager-csi-driver
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
+  paths:
+    - /fleet/cert-manager-csi-driver
+  targets:
+  - name: cert-manager-csi-driver
+    clusterSelector:
+      matchLabels:
+        cert-manager-csi-driver: enabled
+  - name: cert-manager-csi-driver
+    clusterSelector:
+      matchLabels:
+        runtime-enforcer: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: cloudnative-pg
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
+  paths:
+    - /fleet/cloudnative-pg
+  targets:
+  - name: cloudnative-pg
+    clusterSelector:
+      matchLabels:
+        cloudnative-pg: enabled
+  - name: cloudnative-pg
+    clusterSelector:
+      matchLabels:
+        vulnerability-scanner: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: rancher-compliance-crd
   namespace: fleet-local
 spec:
   repo: https://github.com/zackbradys/fleet
@@ -225,7 +291,7 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: compliance
+  name: rancher-compliance
   namespace: fleet-local
 spec:
   repo: https://github.com/zackbradys/fleet
@@ -241,7 +307,7 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: stig-profiles
+  name: rgs-stig-profiles
   namespace: fleet-local
 spec:
   repo: https://github.com/zackbradys/fleet

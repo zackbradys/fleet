@@ -12,8 +12,8 @@ helm:
 
 dependsOn:
   - name: cert-manager-fleet-cert-manager
-  - name: ai-milvus-fleet-milvus
-  - name: ai-litellm-fleet-litellm
+  - name: milvus-fleet-milvus
+  - name: litellm-fleet-litellm
 
 targetCustomizations:
   - name: two-gpu-nodes
