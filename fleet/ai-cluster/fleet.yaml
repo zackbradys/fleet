@@ -28,3 +28,5 @@ diff:
       namespace: fleet-default
       jsonPointers:
         - /spec/rkeConfig/machineGlobalConfig/kube-apiserver-arg
+        - /spec/rkeConfig/machinePools
+        - /spec/rkeConfig/registries/configs
