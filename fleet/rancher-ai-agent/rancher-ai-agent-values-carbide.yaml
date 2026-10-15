@@ -1,0 +1,5 @@
+global:
+  cattle:
+    systemDefaultRegistry: registry.ranchercarbide.dev
+
+activeLlm: openai

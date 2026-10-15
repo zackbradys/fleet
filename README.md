@@ -21,6 +21,7 @@ All images and charts that Carbide provides come from `registry.ranchercarbide.d
 | `longhorn=enabled` | Longhorn: `longhorn`, `longhorn-crd`, `longhorn-configs` | ✅ | ✅ | Default storage class |
 | **RGS AI Stack** | | | | |
 | `ai=enabled` | On `local`: `ai-cluster`, which builds the AI cluster. On the AI cluster: `gpu-operator`, `cloudnative-pg`, `milvus`, `ollama`, `litellm`, `open-webui` | ✅ | ✅ | See [RGS AI Stack](#rgs-ai-stack) |
+| `rancher-ai=enabled` | RGS AI Integrations: the `rancher-ai` UI extension (Liz, the RGS AI Assistant) and `rancher-ai-agent` (the RGS AI Agent and RGS MCP Server behind it) | ✅ |  | Needs `ui-extensions=enabled` and the `rancher-ai-agent-values` secret in `fleet-local`. Uses LiteLLM on the AI cluster at `https://<ai-webui-host>/v1` through the agent's `openai` provider |
 | **Platform Apps** | | | | |
 | `cert-manager=enabled` | cert-manager: `cert-manager` | ✅ | ✅ | The `local` cluster usually has `cert-manager` from Rancher's install |
 | `cert-manager-csi-driver=enabled` | cert-manager CSI driver: `cert-manager-csi-driver` | ✅ | ✅ | Also installed by `runtime-enforcer=enabled` |

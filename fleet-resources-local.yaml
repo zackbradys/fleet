@@ -473,6 +473,26 @@ spec:
     clusterSelector:
       matchLabels:
         rancher-ai-ui-extension: enabled
+  - name: rancher-ai
+    clusterSelector:
+      matchLabels:
+        rancher-ai: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: rancher-ai-agent
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/rancher-ai-agent
+  targets:
+  - name: rancher-ai
+    clusterSelector:
+      matchLabels:
+        rancher-ai: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo

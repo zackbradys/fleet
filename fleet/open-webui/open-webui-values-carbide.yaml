@@ -265,3 +265,24 @@ extraResources:
       redirectScheme:
         scheme: https
         permanent: true
+  - apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: litellm-api
+      namespace: litellm
+    spec:
+      ingressClassName: traefik
+      tls:
+        - hosts:
+            - '${ if hasKey .ClusterLabels "ai-webui-host" }${ get .ClusterLabels "ai-webui-host" }${ end }'
+      rules:
+        - host: '${ if hasKey .ClusterLabels "ai-webui-host" }${ get .ClusterLabels "ai-webui-host" }${ end }'
+          http:
+            paths:
+              - path: /v1
+                pathType: Prefix
+                backend:
+                  service:
+                    name: litellm
+                    port:
+                      name: http

@@ -1,0 +1,17 @@
+defaultNamespace: cattle-ai-agent-system
+
+helm:
+  releaseName: rancher-ai-agent
+  repo: oci://registry.suse.com/rancher/charts/rancher-ai-agent
+  version: 108.0.2+up1.0.2
+  valuesFiles:
+    - rancher-ai-agent-values-carbide.yaml
+  valuesFrom:
+    - secretKeyRef:
+        name: rancher-ai-agent-values
+        namespace: cattle-ai-agent-system
+        key: values.yaml
+
+downstreamResources:
+  - kind: Secret
+    name: rancher-ai-agent-values
