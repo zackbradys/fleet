@@ -13,8 +13,6 @@ websocket:
 
 ollama:
   enabled: false
-ollamaUrls:
-  - http://ollama-0.ollama.svc.cluster.local:11434
 pipelines:
   enabled: false
 tika:
@@ -59,12 +57,8 @@ extraEnvVars:
     value: milvus
   - name: MILVUS_URI
     value: http://milvus.milvus.svc.cluster.local:19530
-  - name: RAG_EMBEDDING_ENGINE
-    value: ollama
   - name: RAG_EMBEDDING_MODEL
-    value: nomic-embed-text
-  - name: RAG_OLLAMA_BASE_URL
-    value: http://ollama-0.ollama.svc.cluster.local:11434
+    value: sentence-transformers/all-MiniLM-L6-v2
   - name: RAG_TOP_K
     value: "10"
 

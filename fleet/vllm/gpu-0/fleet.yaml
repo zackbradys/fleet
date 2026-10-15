@@ -1,0 +1,18 @@
+defaultNamespace: vllm
+
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: baseline
+
+helm:
+  releaseName: vllm-0
+  repo: oci://registry.ranchercarbide.dev/charts/vllm
+  version: 0.1.10
+  valuesFiles:
+    - vllm-values-carbide.yaml
+  valuesFrom:
+    - secretKeyRef:
+        name: vllm-values
+        key: values.yaml
+
+dependsOn:
+  - name: gpu-operator-fleet-gpu-operator

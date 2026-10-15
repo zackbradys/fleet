@@ -365,6 +365,24 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
+  name: vllm
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
+  paths:
+    - /fleet/vllm
+  targets:
+  - name: ai
+    clusterSelector:
+      matchLabels:
+        ai: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
   name: ollama
   namespace: fleet-default
 spec:
@@ -375,10 +393,10 @@ spec:
   paths:
     - /fleet/ollama
   targets:
-  - name: ai
+  - name: ollama
     clusterSelector:
       matchLabels:
-        ai: enabled
+        ollama: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo

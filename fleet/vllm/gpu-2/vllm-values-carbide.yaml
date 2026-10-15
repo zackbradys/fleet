@@ -1,0 +1,39 @@
+global:
+  imageRegistry: registry.ranchercarbide.dev
+
+servingEngineSpec:
+  runtimeClassName: nvidia
+  tolerations:
+    - key: nvidia.com/gpu
+      operator: Exists
+      effect: NoSchedule
+  startupProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    failureThreshold: 180
+    httpGet:
+      path: /health
+      port: 8000
+  modelSpec:
+    - name: gpt-oss-120b
+      repository: containers/vllm-openai
+      tag: 0.19.0-5.20
+      modelURL: openai/gpt-oss-120b
+      replicaCount: 1
+      requestCPU: 8
+      requestMemory: 96Gi
+      requestGPU: 4
+      pvcStorage: 100Gi
+      shmSize: 20Gi
+      enableTool: true
+      toolCallParser: openai
+      vllmConfig:
+        enablePrefixCaching: true
+        tensorParallelSize: 4
+        maxModelLen: 32768
+        extraArgs:
+          - --served-model-name
+          - gpt-oss:120b
+
+routerSpec:
+  enableRouter: false

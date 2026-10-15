@@ -9,29 +9,12 @@ helm:
   version: 8.19.1
   valuesFiles:
     - open-webui-values-carbide.yaml
+  valuesFrom:
+    - secretKeyRef:
+        name: open-webui-values
+        key: values.yaml
 
 dependsOn:
   - name: cert-manager-fleet-cert-manager
   - name: milvus-fleet-milvus
   - name: litellm-fleet-litellm
-
-targetCustomizations:
-  - name: two-gpu-nodes
-    clusterSelector:
-      matchLabels:
-        ai-gpu-nodes: "2"
-    helm:
-      values:
-        ollamaUrls:
-          - http://ollama-0.ollama.svc.cluster.local:11434
-          - http://ollama-1.ollama.svc.cluster.local:11434
-  - name: three-gpu-nodes
-    clusterSelector:
-      matchLabels:
-        ai-gpu-nodes: "3"
-    helm:
-      values:
-        ollamaUrls:
-          - http://ollama-0.ollama.svc.cluster.local:11434
-          - http://ollama-1.ollama.svc.cluster.local:11434
-          - http://ollama-2.ollama.svc.cluster.local:11434

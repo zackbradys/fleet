@@ -1,0 +1,27 @@
+defaultNamespace: vllm
+
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: baseline
+
+helm:
+  releaseName: vllm-2
+  repo: oci://registry.ranchercarbide.dev/charts/vllm
+  version: 0.1.10
+  valuesFiles:
+    - vllm-values-carbide.yaml
+  valuesFrom:
+    - secretKeyRef:
+        name: vllm-values
+        key: values.yaml
+
+dependsOn:
+  - name: gpu-operator-fleet-gpu-operator
+
+targetCustomizations:
+  - name: not-enough-gpu-nodes
+    clusterSelector:
+      matchExpressions:
+        - key: ai-gpu-nodes
+          operator: NotIn
+          values: ["3"]
+    doNotDeploy: true
