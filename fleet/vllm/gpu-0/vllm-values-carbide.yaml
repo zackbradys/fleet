@@ -2,6 +2,8 @@ global:
   imageRegistry: registry.ranchercarbide.dev
 
 servingEngineSpec:
+  strategy:
+    type: Recreate
   runtimeClassName: nvidia
   tolerations:
     - key: nvidia.com/gpu

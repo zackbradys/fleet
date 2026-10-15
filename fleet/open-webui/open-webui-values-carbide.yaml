@@ -3,14 +3,6 @@ global:
   tls:
     source: secret
 
-# temporary: the chart defaults (0.6.41-14.20, redis 8.4.0-2.1) are not in Carbide right now
-image:
-  tag: "0.6.41-13.9"
-websocket:
-  redis:
-    image:
-      tag: "8.6.7-11.2"
-
 ollama:
   enabled: false
 pipelines:
@@ -237,7 +229,7 @@ extraResources:
           restartPolicy: OnFailure
           containers:
             - name: bootstrap
-              image: registry.ranchercarbide.dev/containers/open-webui:0.6.41-13.9
+              image: registry.ranchercarbide.dev/containers/open-webui:0.6.41-14.20
               command:
                 - python3.11
                 - -c

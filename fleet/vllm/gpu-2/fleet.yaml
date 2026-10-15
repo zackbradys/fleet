@@ -17,6 +17,17 @@ helm:
 dependsOn:
   - name: gpu-operator-fleet-gpu-operator
 
+diff:
+  comparePatches:
+    - apiVersion: apps/v1
+      kind: Deployment
+      jsonPointers:
+        - /metadata/labels/app.kubernetes.io~1managed-by
+    - apiVersion: v1
+      kind: Service
+      jsonPointers:
+        - /metadata/labels/app.kubernetes.io~1managed-by
+
 targetCustomizations:
   - name: not-enough-gpu-nodes
     clusterSelector:
