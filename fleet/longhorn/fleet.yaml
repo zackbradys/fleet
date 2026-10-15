@@ -10,3 +10,17 @@ helm:
 
 dependsOn:
   - name: longhorn-crd-fleet-longhorn-crd
+
+targetCustomizations:
+  - name: longhorn-v2
+    clusterSelector:
+      matchLabels:
+        longhorn-v2: enabled
+    helm:
+      values:
+        persistence:
+          dataEngine: v2
+        defaultSettings:
+          v1DataEngine: false
+          v2DataEngine: true
+          createDefaultDiskLabeledNodes: true

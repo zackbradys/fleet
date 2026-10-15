@@ -2,3 +2,12 @@ defaultNamespace: longhorn-system
 
 dependsOn:
   - name: longhorn-crd-fleet-longhorn-crd
+
+targetCustomizations:
+  - name: longhorn-v2
+    clusterSelector:
+      matchLabels:
+        longhorn-v2: enabled
+    yaml:
+      overlays:
+        - longhorn-v2
