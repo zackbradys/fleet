@@ -4,6 +4,7 @@ global:
 servingEngineSpec:
   strategy:
     type: Recreate
+  imagePullPolicy: IfNotPresent
   runtimeClassName: nvidia
   tolerations:
     - key: nvidia.com/gpu

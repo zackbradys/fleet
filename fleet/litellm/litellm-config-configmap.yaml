@@ -9,6 +9,7 @@ data:
 
     litellm_settings:
       drop_params: true
+      modify_params: true
       callbacks: strip_reasoning.handler
 
     general_settings:

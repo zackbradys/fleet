@@ -1,0 +1,12 @@
+defaultNamespace: cattle-ai-agent-system
+
+helm:
+  takeOwnership: true
+
+diff:
+  comparePatches:
+    - apiVersion: v1
+      kind: ConfigMap
+      name: rancher-ai-ui
+      jsonPointers:
+        - /data
