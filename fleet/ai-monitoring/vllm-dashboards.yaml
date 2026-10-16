@@ -134,7 +134,7 @@ data:
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "rate(vllm:e2e_request_latency_seconds_sum[$__interval]) / rate(vllm:e2e_request_latency_seconds_count[$__interval])",
+              "expr": "rate(vllm:e2e_request_latency_seconds_sum[$__rate_interval]) / rate(vllm:e2e_request_latency_seconds_count[$__rate_interval])",
               "format": "table",
               "legendFormat": "E2E Latency",
               "range": true,
@@ -515,7 +515,7 @@ data:
           "targets": [
             {
               "editorMode": "code",
-              "expr": "rate(vllm:time_to_first_token_seconds_sum[$__interval]) / rate(vllm:time_to_first_token_seconds_count[$__interval])",
+              "expr": "rate(vllm:time_to_first_token_seconds_sum[$__rate_interval]) / rate(vllm:time_to_first_token_seconds_count[$__rate_interval])",
               "format": "table",
               "legendFormat": "TTFT (Avg)",
               "range": true,
@@ -894,7 +894,7 @@ data:
           "targets": [
             {
               "editorMode": "code",
-              "expr": "rate(vllm:inter_token_latency_seconds_sum[$__interval]) / rate(vllm:inter_token_latency_seconds_count[$__interval])",
+              "expr": "rate(vllm:inter_token_latency_seconds_sum[$__rate_interval]) / rate(vllm:inter_token_latency_seconds_count[$__rate_interval])",
               "legendFormat": "ITL (Avg)",
               "range": true,
               "refId": "A"
@@ -905,7 +905,7 @@ data:
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.50, sum by(le) (rate(vllm:inter_token_latency_seconds_bucket[$__interval])))",
+              "expr": "histogram_quantile(0.50, sum by(le) (rate(vllm:inter_token_latency_seconds_bucket[$__rate_interval])))",
               "hide": false,
               "instant": false,
               "legendFormat": "ITL (p50)",
@@ -918,7 +918,7 @@ data:
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.90, sum by(le) (rate(vllm:inter_token_latency_seconds_bucket[$__interval])))",
+              "expr": "histogram_quantile(0.90, sum by(le) (rate(vllm:inter_token_latency_seconds_bucket[$__rate_interval])))",
               "hide": false,
               "instant": false,
               "legendFormat": "ITL (p90)",
@@ -931,7 +931,7 @@ data:
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.99, sum by(le) (rate(vllm:inter_token_latency_seconds_bucket[$__interval])))",
+              "expr": "histogram_quantile(0.99, sum by(le) (rate(vllm:inter_token_latency_seconds_bucket[$__rate_interval])))",
               "hide": false,
               "instant": false,
               "legendFormat": "ITL (p99)",
@@ -1308,7 +1308,7 @@ data:
           "targets": [
             {
               "editorMode": "code",
-              "expr": "rate(vllm:generation_tokens_total[$__interval])",
+              "expr": "rate(vllm:generation_tokens_total[$__rate_interval])",
               "legendFormat": "Generation TPS",
               "range": true,
               "refId": "A"
@@ -1319,7 +1319,7 @@ data:
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "rate(vllm:prompt_tokens_total[$__interval])",
+              "expr": "rate(vllm:prompt_tokens_total[$__rate_interval])",
               "hide": false,
               "instant": false,
               "legendFormat": "Prompt TPS",
@@ -1332,7 +1332,7 @@ data:
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "rate(vllm:iteration_tokens_total_count[$__interval])",
+              "expr": "rate(vllm:iteration_tokens_total_count[$__rate_interval])",
               "hide": false,
               "instant": false,
               "legendFormat": "Overall Iteration TPS",
