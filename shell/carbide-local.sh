@@ -87,7 +87,7 @@ helm repo add carbide-charts https://rancherfederal.github.io/carbide-charts
 helm repo add kubewarden https://charts.kubewarden.io
 helm repo update
 
-### vdb-explorer disabled until the chart provides a writable /var/lib/vuldb (see fleet/airgapped-docs)
-helm upgrade -i airgapped-docs carbide-charts/airgapped-docs -n carbide-docs-system --version=0.1.56 --set global.cattle.systemDefaultRegistry=$CarbideRegistry --set docs.neuvectorvdbexplorer.enabled=false
+### Needs helm registry login registry.ranchercarbide.dev
+helm upgrade -i airgapped-docs oci://registry.ranchercarbide.dev/carbide-charts/carbide-offline-docs -n carbide-docs-system --create-namespace --version=2.0.0-latest --set image.pullPolicy=IfNotPresent
 
 ### Install UI Extensions

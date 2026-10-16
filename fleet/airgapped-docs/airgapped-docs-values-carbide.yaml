@@ -1,6 +1,2 @@
-global:
-  cattle:
-    systemDefaultRegistry: registry.ranchercarbide.dev
-docs:
-  neuvectorvdbexplorer:
-    enabled: false
+image:
+  pullPolicy: IfNotPresent

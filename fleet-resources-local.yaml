@@ -332,6 +332,8 @@ metadata:
 spec:
   repo: https://github.com/zackbradys/fleet
   branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
   paths:
     - /fleet/airgapped-docs
   targets:
