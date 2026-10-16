@@ -401,6 +401,23 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
+  name: ai-monitoring
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/ai-monitoring
+  targets:
+  - name: ai-monitoring
+    clusterSelector:
+      matchLabels:
+        ai: enabled
+        monitoring: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
   name: litellm
   namespace: fleet-default
 spec:

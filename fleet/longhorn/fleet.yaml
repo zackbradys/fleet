@@ -12,6 +12,22 @@ dependsOn:
   - name: longhorn-crd-fleet-longhorn-crd
 
 targetCustomizations:
+  - name: longhorn-v2-monitoring
+    clusterSelector:
+      matchLabels:
+        longhorn-v2: enabled
+        monitoring: enabled
+    helm:
+      values:
+        persistence:
+          dataEngine: v2
+        defaultSettings:
+          v1DataEngine: false
+          v2DataEngine: true
+          createDefaultDiskLabeledNodes: true
+        metrics:
+          serviceMonitor:
+            enabled: true
   - name: longhorn-v2
     clusterSelector:
       matchLabels:
@@ -24,3 +40,12 @@ targetCustomizations:
           v1DataEngine: false
           v2DataEngine: true
           createDefaultDiskLabeledNodes: true
+  - name: monitoring
+    clusterSelector:
+      matchLabels:
+        monitoring: enabled
+    helm:
+      values:
+        metrics:
+          serviceMonitor:
+            enabled: true

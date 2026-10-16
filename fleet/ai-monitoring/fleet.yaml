@@ -1,0 +1,4 @@
+defaultNamespace: cattle-monitoring-system
+
+dependsOn:
+  - name: kube-prometheus-stack-fleet-kube-prometheus-stack
