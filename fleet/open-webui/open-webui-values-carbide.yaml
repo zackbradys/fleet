@@ -53,6 +53,8 @@ extraEnvVars:
     value: sentence-transformers/all-MiniLM-L6-v2
   - name: RAG_TOP_K
     value: "10"
+  - name: ENABLE_RETRIEVAL_QUERY_GENERATION
+    value: "False"
 
 volumes:
   - name: classification
