@@ -97,6 +97,22 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
+  name: monitoring-configs
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/monitoring-configs
+  targets:
+  - name: monitoring
+    clusterSelector:
+      matchLabels:
+        monitoring: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
   name: rancher-monitoring-dashboards
   namespace: fleet-local
 spec:

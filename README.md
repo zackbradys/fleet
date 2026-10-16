@@ -27,7 +27,7 @@ All images and charts that Carbide provides come from `registry.ranchercarbide.d
 | **Platform Apps** | | | | |
 | `cert-manager=enabled` | cert-manager: `cert-manager` | ✅ | ✅ | The `local` cluster usually has `cert-manager` from Rancher's install |
 | `cert-manager-csi-driver=enabled` | cert-manager CSI driver: `cert-manager-csi-driver` | ✅ | ✅ | Also installed by `runtime-enforcer=enabled` |
-| `monitoring=enabled` | Monitoring: `kube-prometheus-stack`, `rancher-monitoring-dashboards` | ✅ | ✅ | `rancher-monitoring` is deprecated in Rancher 2.15 |
+| `monitoring=enabled` | Monitoring: `kube-prometheus-stack`, `rancher-monitoring-dashboards`, `monitoring-configs` (lets Prometheus reach the CoreDNS metrics under RKE2's CIS network policies) | ✅ | ✅ | `rancher-monitoring` is deprecated in Rancher 2.15 |
 | `logging=enabled` | Logging: `rancher-logging`, `rancher-logging-crd` | ✅ | ✅ |  |
 | `neuvector=enabled` | NeuVector: `neuvector`, `neuvector-crd` | ✅ | ✅ |  |
 | `kubewarden=enabled` | Kubewarden: `kubewarden` (the open source `admission-controller` chart with RGS Carbide images), with Policy Reporter | ✅ | ✅ | Use this or `admission-controller=enabled`, not both. The Policy Reporter page needs `admission-controller` |

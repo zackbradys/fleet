@@ -4,6 +4,15 @@ dependsOn:
   - name: longhorn-crd-fleet-longhorn-crd
 
 targetCustomizations:
+  - name: longhorn-v2-monitoring
+    clusterSelector:
+      matchLabels:
+        longhorn-v2: enabled
+        monitoring: enabled
+    yaml:
+      overlays:
+        - longhorn-v2
+        - monitoring
   - name: longhorn-v2
     clusterSelector:
       matchLabels:
@@ -11,3 +20,10 @@ targetCustomizations:
     yaml:
       overlays:
         - longhorn-v2
+  - name: monitoring
+    clusterSelector:
+      matchLabels:
+        monitoring: enabled
+    yaml:
+      overlays:
+        - monitoring
