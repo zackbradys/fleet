@@ -1,0 +1,5 @@
+apiVersion: v2
+name: hobbyfarm-configs
+description: The HobbyFarm Environment, VM Templates, Users, TLS Certificate, and Rancher NavLinks
+type: application
+version: 0.1.0

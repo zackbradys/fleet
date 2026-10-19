@@ -1,0 +1,74 @@
+### The environment-specific values (domain, subnet, security group, and users) come from the hobbyfarm-configs-values secret
+
+# (Required) The domain the HobbyFarm hostnames are under
+domain: ""
+
+hostnames:
+  ui: hobbyfarm
+  admin: hobbyfarm-admin
+  backend: hobbyfarm-backend
+  shell: hobbyfarm-shell
+
+certificate:
+  enabled: true
+  issuer: letsencrypt-production
+  secretName: hobbyfarm-tls
+
+environment:
+  name: aws-env
+  provider: aws
+  region: us-east-1
+  # (Required) The subnet and security group for the student VMs
+  subnet: ""
+  securityGroup: ""
+  # The secret with the access_key and secret_key the student VMs are created with
+  credSecret: aws-creds
+  executorImage: rancher/terraform-controller-executor:v0.0.13-alpha1
+  capacity: 300
+  instanceType: m5.2xlarge
+  disk: "128"
+
+module:
+  name: tf-module-aws
+  url: https://github.com/zackbradys/tf-module-aws
+  branch: master
+
+# The scenarios reference these names, so keep them when changing the images
+# The RKE2 v1.36 support matrix covers Rocky 9.7+, RHEL 9.7+, Ubuntu 22.04/24.04/26.04, and SLES 15 SP6/SP7 and 16.0
+# The us-east-1 AMIs come from ~/Documents/Coding/ami-audit.sh
+vmTemplates:
+  al2023-6.1:
+    displayName: amazon-linux-2023-6.1
+    image: ami-0636d90d6337ae368
+    sshUsername: ec2-user
+  sles-15-sp7:
+    displayName: suse-sles-15-sp7
+    image: ami-0a4fc00aef333d729
+    sshUsername: ec2-user
+  rocky-9.8:
+    displayName: rocky-linux-9.8
+    image: ami-07f1ef003bc5de2b1
+    sshUsername: rocky
+  rhel-9.8:
+    displayName: redhat-rhel-9.8
+    image: ami-0fec1400d2a5313ec
+    sshUsername: ec2-user
+  ubuntu-24.04:
+    displayName: ubuntu-lts-24.04
+    image: ami-02a9cdd4e98bc3c78
+    sshUsername: ubuntu
+
+# - name: admin
+#   passwordHash: <bcrypt hash with 10 rounds>
+#   admin: true
+#   accessCodes: [workshop]
+users: []
+
+userSettings:
+  ctr_enabled: "true"
+  terminal_fontSize: "16"
+  terminal_theme: GitHub
+
+# The Student and Admin links in the Rancher cluster dashboard of the cluster HobbyFarm runs on
+navlinks:
+  enabled: true

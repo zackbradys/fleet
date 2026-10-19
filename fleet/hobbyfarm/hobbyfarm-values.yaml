@@ -1,0 +1,48 @@
+### The hostnames and name prefixes come from the hobbyfarm-values secret
+ingress:
+  enabled: true
+  tls:
+    enabled: true
+    secrets:
+      ui: hobbyfarm-tls
+      admin: hobbyfarm-tls
+      backend: hobbyfarm-tls
+      shell: hobbyfarm-tls
+
+shell:
+  replicas: 12
+
+terraform:
+  enabled: true
+
+admin:
+  image: hobbyfarm/admin-ui:v3.0.0
+  configMapName: admin-config
+  config:
+    title: RGS Learn Administration
+    favicon: /assets/default/favicon.png
+    login:
+      logo: https://raw.githubusercontent.com/zackbradys/resources/main/images/rgs-logo-stacked.svg
+      background: assets/default/vault.jpg
+    logo: /assets/default/logo.svg
+
+ui:
+  image: hobbyfarm/ui:v3.0.0
+  configMapName: ui-config
+  config:
+    title: RGS Learn Platform
+    favicon: /assets/default/favicon.png
+    login:
+      logo: https://raw.githubusercontent.com/zackbradys/resources/main/images/rgs-logo-stacked.svg
+      background: /assets/default/login_container_farm.svg
+    logo: /assets/default/logo.svg
+    about:
+      title: About RGS Learn
+      body: RGS Learn is a learning management platform for the Rancher Ecosystem! It is a place to learn about cloud native technologies like Kubernetes and Rancher!
+      buttons:
+        - title: RGS GitHub
+          url: https://github.com/zackbradys
+        - title: RGS Website
+          url: https://ranchergovernment.com
+        - title: Contact RGS
+          url: mailto:fieldeng@ranchergovernment.com

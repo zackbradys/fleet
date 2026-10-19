@@ -1,0 +1,17 @@
+{{- if and .Values.certificate.enabled (.Capabilities.APIVersions.Has "cert-manager.io/v1/Certificate") }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .Values.certificate.secretName }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  issuerRef:
+    name: {{ .Values.certificate.issuer }}
+    kind: ClusterIssuer
+  secretName: {{ .Values.certificate.secretName }}
+  commonName: {{ printf "%s.%s" .Values.hostnames.ui .Values.domain }}
+  dnsNames:
+  {{- range $key := list "ui" "admin" "backend" "shell" }}
+    - {{ printf "%s.%s" (get $.Values.hostnames $key) $.Values.domain }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,56 @@
+{{- $domain := required "domain is required" .Values.domain }}
+apiVersion: hobbyfarm.io/v1
+kind: Environment
+metadata:
+  name: {{ .Values.environment.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  display_name: {{ .Values.environment.name }}
+  provider: {{ .Values.environment.provider }}
+  dnssuffix: null
+  ip_translation_map: null
+  ws_endpoint: {{ printf "%s.%s" .Values.hostnames.shell $domain }}
+  environment_specifics:
+    cred_secret: {{ .Values.environment.credSecret }}
+    executor_image: {{ .Values.environment.executorImage }}
+    module: {{ .Values.module.name }}
+    region: {{ .Values.environment.region }}
+    subnet: {{ required "environment.subnet is required" .Values.environment.subnet }}
+    vpc_security_group_id: {{ required "environment.securityGroup is required" .Values.environment.securityGroup }}
+  count_capacity:
+  {{- range $name, $vmt := .Values.vmTemplates }}
+    {{ $name | quote }}: {{ $vmt.capacity | default $.Values.environment.capacity }}
+  {{- end }}
+  template_mapping:
+  {{- range $name, $vmt := .Values.vmTemplates }}
+    {{ $name | quote }}:
+      disk: {{ $vmt.disk | default $.Values.environment.disk | quote }}
+      image: {{ $vmt.image }}
+      instance_type: {{ $vmt.instanceType | default $.Values.environment.instanceType }}
+      ssh_username: {{ $vmt.sshUsername }}
+  {{- end }}
+---
+apiVersion: terraformcontroller.cattle.io/v1
+kind: Module
+metadata:
+  name: {{ .Values.module.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  git:
+    branch: {{ .Values.module.branch }}
+    intervalSeconds: 1800
+    url: {{ .Values.module.url }}
+{{- range $name, $vmt := .Values.vmTemplates }}
+---
+apiVersion: hobbyfarm.io/v1
+kind: VirtualMachineTemplate
+metadata:
+  name: {{ $name }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  name: {{ $vmt.displayName }}
+  image: {{ $vmt.image }}
+  config_map:
+    cloud-config: ""
+    webinterfaces: '[]'
+{{- end }}

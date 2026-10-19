@@ -220,6 +220,17 @@ extraResources:
       commonName: '${ if hasKey .ClusterLabels "ai-webui-host" }${ get .ClusterLabels "ai-webui-host" }${ end }'
       dnsNames:
         - '${ if hasKey .ClusterLabels "ai-webui-host" }${ get .ClusterLabels "ai-webui-host" }${ end }'
+  - apiVersion: ui.cattle.io/v1
+    kind: NavLink
+    metadata:
+      name: open-webui
+    spec:
+      label: Open WebUI
+      target: _blank
+      description: Chat UI for the RGS AI Stack
+      group: RGS AI Stack
+      sideLabel: CHAT
+      toURL: '${ if hasKey .ClusterLabels "ai-webui-host" }https://${ get .ClusterLabels "ai-webui-host" }${ end }'
   - apiVersion: batch/v1
     kind: Job
     metadata:

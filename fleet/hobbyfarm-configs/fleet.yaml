@@ -1,0 +1,21 @@
+defaultNamespace: hobbyfarm-system
+
+helm:
+  releaseName: hobbyfarm-configs
+  valuesFrom:
+    - secretKeyRef:
+        name: hobbyfarm-configs-values
+        key: values.yaml
+
+dependsOn:
+  - name: hobbyfarm-fleet-hobbyfarm
+
+### HobbyFarm updates these when users add access codes or change their settings
+diff:
+  comparePatches:
+    - apiVersion: hobbyfarm.io/v2
+      kind: User
+      namespace: hobbyfarm-system
+      jsonPointers:
+        - /spec/access_codes
+        - /spec/settings

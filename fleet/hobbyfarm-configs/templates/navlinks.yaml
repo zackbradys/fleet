@@ -1,0 +1,25 @@
+{{- if and .Values.navlinks.enabled (.Capabilities.APIVersions.Has "ui.cattle.io/v1/NavLink") }}
+apiVersion: ui.cattle.io/v1
+kind: NavLink
+metadata:
+  name: hobbyfarm
+spec:
+  label: HobbyFarm
+  target: _blank
+  description: Student UI for HobbyFarm
+  group: HobbyFarm Resources
+  sideLabel: STUDENT
+  toURL: {{ printf "https://%s.%s" .Values.hostnames.ui .Values.domain }}
+---
+apiVersion: ui.cattle.io/v1
+kind: NavLink
+metadata:
+  name: hobbyfarm-admin
+spec:
+  label: HobbyFarm Admin
+  target: _blank
+  description: Admin UI for HobbyFarm
+  group: HobbyFarm Resources
+  sideLabel: ADMIN
+  toURL: {{ printf "https://%s.%s" .Values.hostnames.admin .Values.domain }}
+{{- end }}

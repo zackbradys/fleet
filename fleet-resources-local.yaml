@@ -594,6 +594,38 @@ spec:
       matchLabels:
         ai: enabled
 ---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: hobbyfarm
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/hobbyfarm
+  targets:
+  - name: hobbyfarm
+    clusterSelector:
+      matchLabels:
+        hobbyfarm: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: hobbyfarm-configs
+  namespace: fleet-local
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/hobbyfarm-configs
+  targets:
+  - name: hobbyfarm
+    clusterSelector:
+      matchLabels:
+        hobbyfarm: enabled
+---
 apiVersion: catalog.cattle.io/v1
 kind: ClusterRepo
 metadata:

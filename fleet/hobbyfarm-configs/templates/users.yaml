@@ -1,0 +1,48 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: hobbyfarm-admin
+  namespace: {{ .Release.Namespace }}
+  labels:
+    rbac.hobbyfarm.io/managed: "true"
+rules:
+  - apiGroups: ["hobbyfarm.io"]
+    resources: ["*"]
+    verbs: ["*"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["roles", "rolebindings"]
+    verbs: ["*"]
+{{- range .Values.users }}
+---
+apiVersion: hobbyfarm.io/v2
+kind: User
+metadata:
+  name: {{ .name }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  email: {{ .email | default .name }}
+  password: {{ required (printf "users[%s].passwordHash is required" .name) .passwordHash | quote }}
+  access_codes:
+    {{- toYaml (.accessCodes | default list) | nindent 4 }}
+  settings:
+    {{- with .accessCodes }}
+    ctxAccessCode: {{ first . }}
+    {{- end }}
+    {{- toYaml $.Values.userSettings | nindent 4 }}
+{{- if .admin }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: hobbyfarm-admin-{{ .name }}
+  namespace: {{ $.Release.Namespace }}
+subjects:
+  - kind: User
+    name: {{ .name }}
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: hobbyfarm-admin
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}
+{{- end }}
