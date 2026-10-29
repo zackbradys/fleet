@@ -3,6 +3,6 @@ defaultNamespace: cert-manager
 helm:
   releaseName: cert-manager
   repo: oci://registry.ranchercarbide.dev/charts/cert-manager
-  version: 1.21.2
+  version: 1.21.3
   valuesFiles:
     - cert-manager-values-carbide.yaml

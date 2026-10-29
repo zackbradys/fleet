@@ -11,6 +11,6 @@ namespaceLabels:
 helm:
   releaseName: cert-manager-csi-driver
   repo: oci://registry.ranchercarbide.dev/charts/cert-manager-csi-driver
-  version: 0.16.0
+  version: 0.16.1
   valuesFiles:
     - cert-manager-csi-driver-values-carbide.yaml

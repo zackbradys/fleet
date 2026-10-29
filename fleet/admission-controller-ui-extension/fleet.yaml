@@ -4,7 +4,7 @@ helm:
   releaseName: kubewarden
   repo: http://ui-plugin-catalog-svc.cattle-ui-plugin-system:8080
   chart: kubewarden
-  version: 4.2.1
+  version: 4.2.2
 
 dependsOn:
   - name: ui-plugin-catalog-fleet-ui-plugin-catalog
