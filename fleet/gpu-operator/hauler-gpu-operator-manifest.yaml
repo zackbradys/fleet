@@ -15,6 +15,7 @@ metadata:
 spec:
   images:
     # precompiled driver, the tag must match the GPU node kernel from uname -r
+    - name: registry.ranchercarbide.dev/third-party/nvidia/driver:595-6.12.0-160000.38-default-sles16.0
     - name: registry.ranchercarbide.dev/third-party/nvidia/driver:595-6.12.0-160000.40-default-sles16.0
     - name: nvcr.io/nvidia/gpu-operator:v26.7.2
     - name: nvcr.io/nvidia/k8s/container-toolkit:v1.20.1

@@ -49,9 +49,9 @@ spec:
         requests:
           cpu: {{ .cpu | default "4" | quote }}
           memory: {{ .memory | default "32Gi" }}
-          nvidia.com/gpu: {{ .gpus | default 1 }}
+          nvidia.com/gpu: {{ hasKey . "gpus" | ternary .gpus 1 | quote }}
         limits:
           cpu: {{ .cpu | default "4" | quote }}
           memory: {{ .memory | default "32Gi" }}
-          nvidia.com/gpu: {{ .gpus | default 1 }}
+          nvidia.com/gpu: {{ hasKey . "gpus" | ternary .gpus 1 | quote }}
 {{- end }}
