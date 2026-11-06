@@ -329,10 +329,10 @@ spec:
   paths:
     - /fleet/gpu-operator
   targets:
-  - name: ai
+  - name: gpu-operator
     clusterSelector:
       matchLabels:
-        ai: enabled
+        gpu-operator: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
@@ -351,10 +351,6 @@ spec:
     clusterSelector:
       matchLabels:
         cloudnative-pg: enabled
-  - name: ai
-    clusterSelector:
-      matchLabels:
-        ai: enabled
   - name: vulnerability-scanner
     clusterSelector:
       matchLabels:
@@ -373,10 +369,10 @@ spec:
   paths:
     - /fleet/milvus
   targets:
-  - name: ai
+  - name: milvus
     clusterSelector:
       matchLabels:
-        ai: enabled
+        milvus: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
@@ -391,10 +387,10 @@ spec:
   paths:
     - /fleet/vllm
   targets:
-  - name: ai
+  - name: vllm
     clusterSelector:
       matchLabels:
-        ai: enabled
+        vllm: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
@@ -417,6 +413,138 @@ spec:
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
+  name: kserve-crd
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/kserve-crd
+  targets:
+  - name: kserve
+    clusterSelector:
+      matchLabels:
+        kserve: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: kserve
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/kserve
+  targets:
+  - name: kserve
+    clusterSelector:
+      matchLabels:
+        kserve: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: ai-models
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/ai-models
+  targets:
+  - name: kserve
+    clusterSelector:
+      matchLabels:
+        kserve: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: egress-gateway
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
+  paths:
+    - /fleet/egress-gateway
+  targets:
+  - name: egress-gateway
+    clusterSelector:
+      matchLabels:
+        egress-gateway: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: egress-routes
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/egress-routes
+  targets:
+  - name: egress-gateway
+    clusterSelector:
+      matchLabels:
+        egress-gateway: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: agentgateway-crds
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/agentgateway-crds
+  targets:
+  - name: agentgateway
+    clusterSelector:
+      matchLabels:
+        agentgateway: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: agentgateway
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  paths:
+    - /fleet/agentgateway
+  targets:
+  - name: agentgateway
+    clusterSelector:
+      matchLabels:
+        agentgateway: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: open-webui-mcpo
+  namespace: fleet-default
+spec:
+  repo: https://github.com/zackbradys/fleet
+  branch: main
+  helmSecretName: registry-creds
+  helmRepoURLRegex: 'oci://registry\.ranchercarbide\.dev(/|$)'
+  paths:
+    - /fleet/open-webui-mcpo
+  targets:
+  - name: open-webui-mcpo
+    clusterSelector:
+      matchLabels:
+        open-webui-mcpo: enabled
+---
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
   name: ai-monitoring
   namespace: fleet-default
 spec:
@@ -428,7 +556,7 @@ spec:
   - name: ai-monitoring
     clusterSelector:
       matchLabels:
-        ai: enabled
+        ai-monitoring: enabled
         monitoring: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
@@ -442,10 +570,10 @@ spec:
   paths:
     - /fleet/litellm
   targets:
-  - name: ai
+  - name: litellm
     clusterSelector:
       matchLabels:
-        ai: enabled
+        litellm: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
@@ -460,10 +588,10 @@ spec:
   paths:
     - /fleet/open-webui
   targets:
-  - name: ai
+  - name: open-webui
     clusterSelector:
       matchLabels:
-        ai: enabled
+        open-webui: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo

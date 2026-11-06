@@ -1,0 +1,55 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: egress-selfsigned
+spec:
+  selfSigned: {}
+---
+# signs the gateway's certificate for each site, which the locked apps trust
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: egress-gateway-ca
+spec:
+  isCA: true
+  commonName: RGS AI Egress Gateway CA
+  secretName: egress-gateway-ca
+  duration: 87600h
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  issuerRef:
+    name: egress-selfsigned
+    kind: Issuer
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: egress-gateway-ca
+spec:
+  ca:
+    secretName: egress-gateway-ca
+---
+# the ai's own identity on outbound calls, never a user's
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: egress-client
+spec:
+  secretName: egress-client
+  commonName: {{ .Values.clientCertificate.commonName }}
+  duration: {{ .Values.clientCertificate.duration }}
+  renewBefore: {{ .Values.clientCertificate.renewBefore }}
+  usages:
+    - client auth
+    - digital signature
+    - key encipherment
+  privateKey:
+    rotationPolicy: Always
+  issuerRef:
+  {{- if .Values.clientCertificate.issuerRef.name }}
+    {{- toYaml .Values.clientCertificate.issuerRef | nindent 4 }}
+  {{- else }}
+    name: egress-gateway-ca
+    kind: Issuer
+  {{- end }}

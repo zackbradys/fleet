@@ -1,0 +1,6 @@
+defaultNamespace: agentgateway-system
+
+helm:
+  releaseName: agentgateway-crds
+  repo: oci://cr.agentgateway.dev/charts/agentgateway-crds
+  version: v1.7.0

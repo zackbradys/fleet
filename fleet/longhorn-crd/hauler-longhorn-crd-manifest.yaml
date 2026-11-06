@@ -1,0 +1,9 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: longhorn-crd-charts
+spec:
+  charts:
+    - name: longhorn-crd
+      repoURL: https://charts.rancher.io
+      version: 110.1.0+up1.12.1

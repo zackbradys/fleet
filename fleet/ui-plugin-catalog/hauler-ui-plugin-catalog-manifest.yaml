@@ -1,0 +1,21 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: ui-plugin-catalog-charts
+spec:
+  charts:
+    - name: ui-plugin-catalog
+      repoURL: oci://registry.ranchercarbide.dev/carbide-charts
+      version: 4.53.0
+      add-images: true
+      valuesFiles:
+        - ui-plugin-catalog-values-carbide.yaml
+---
+# listed by hand, since hauler's render fails the chart's namespace check and misses it
+apiVersion: content.hauler.cattle.io/v1
+kind: Images
+metadata:
+  name: ui-plugin-catalog-images
+spec:
+  images:
+    - name: registry.ranchercarbide.dev/rancher/ui-plugin-catalog:4.53.0

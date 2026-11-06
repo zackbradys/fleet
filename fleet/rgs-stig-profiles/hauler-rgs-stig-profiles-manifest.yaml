@@ -1,0 +1,9 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: rgs-stig-profiles-charts
+spec:
+  charts:
+    - name: rgs-stig-profiles
+      repoURL: oci://registry.ranchercarbide.dev/carbide-charts
+      version: 2.15.3

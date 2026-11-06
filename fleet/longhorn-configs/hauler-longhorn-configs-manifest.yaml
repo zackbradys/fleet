@@ -1,0 +1,8 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Images
+metadata:
+  name: longhorn-configs-images
+spec:
+  images:
+    - name: registry.ranchercarbide.dev/rancher/mirrored-library-busybox:1.36.1
+    - name: registry.ranchercarbide.dev/rancher/mirrored-pause:3.10

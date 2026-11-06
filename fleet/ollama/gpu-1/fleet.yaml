@@ -6,7 +6,7 @@ namespaceLabels:
 helm:
   releaseName: ollama-1
   repo: oci://registry.ranchercarbide.dev/charts/ollama
-  version: 1.76.0
+  version: 1.95.0
   valuesFiles:
     - ollama-values-carbide.yaml
 

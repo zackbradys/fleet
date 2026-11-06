@@ -1,0 +1,14 @@
+defaultNamespace: agentgateway-system
+
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: baseline
+
+helm:
+  releaseName: agentgateway
+  repo: oci://cr.agentgateway.dev/charts/agentgateway
+  version: v1.7.0
+  valuesFiles:
+    - agentgateway-values.yaml
+
+dependsOn:
+  - name: agentgateway-crds-fleet-agentgateway-crds

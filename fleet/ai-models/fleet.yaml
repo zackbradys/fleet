@@ -1,0 +1,24 @@
+defaultNamespace: ai-models
+
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: baseline
+
+helm:
+  releaseName: ai-models
+  valuesFrom:
+    - secretKeyRef:
+        name: ai-models-values
+        key: values.yaml
+
+dependsOn:
+  - name: kserve-fleet-kserve
+
+targetCustomizations:
+  - name: monitoring
+    clusterSelector:
+      matchLabels:
+        monitoring: enabled
+    helm:
+      values:
+        monitoring:
+          enabled: true

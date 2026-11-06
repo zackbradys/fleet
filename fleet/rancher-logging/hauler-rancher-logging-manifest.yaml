@@ -1,0 +1,22 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: rancher-logging-charts
+spec:
+  charts:
+    - name: rancher-logging
+      repoURL: https://charts.rancher.io
+      version: 110.0.0+up4.10.0-rancher.24
+      add-images: true
+      valuesFiles:
+        - rancher-logging-values-carbide.yaml
+---
+apiVersion: content.hauler.cattle.io/v1
+kind: Images
+metadata:
+  name: rancher-logging-images
+spec:
+  images:
+    - name: registry.ranchercarbide.dev/rancher/mirrored-fluent-fluent-bit:3.1.8
+    - name: registry.ranchercarbide.dev/rancher/mirrored-kube-logging-fluentd:v1.16-4.10-full
+    - name: registry.ranchercarbide.dev/rancher/mirrored-kube-logging-config-reloader:v0.0.6

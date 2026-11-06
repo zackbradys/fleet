@@ -1,0 +1,9 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: agentgateway-crds-charts
+spec:
+  charts:
+    - name: agentgateway-crds
+      repoURL: oci://cr.agentgateway.dev/charts
+      version: v1.7.0

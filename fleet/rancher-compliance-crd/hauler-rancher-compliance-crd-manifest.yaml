@@ -1,0 +1,9 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: rancher-compliance-crd-charts
+spec:
+  charts:
+    - name: rancher-compliance-crd
+      repoURL: https://charts.rancher.io
+      version: 110.3.0+up1.5.4

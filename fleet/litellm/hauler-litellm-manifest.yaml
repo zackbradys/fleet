@@ -1,0 +1,7 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Images
+metadata:
+  name: litellm-images
+spec:
+  images:
+    - name: registry.ranchercarbide.dev/ai/containers/litellm:v1.81.13

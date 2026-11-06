@@ -1,0 +1,19 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: agentgateway-charts
+spec:
+  charts:
+    - name: agentgateway
+      repoURL: oci://cr.agentgateway.dev/charts
+      version: v1.7.0
+---
+# listed by hand, since the controller creates each gateway's proxy and the chart never renders it
+apiVersion: content.hauler.cattle.io/v1
+kind: Images
+metadata:
+  name: agentgateway-images
+spec:
+  images:
+    - name: cr.agentgateway.dev/controller:v1.7.0
+    - name: cr.agentgateway.dev/agentgateway:v1.7.0

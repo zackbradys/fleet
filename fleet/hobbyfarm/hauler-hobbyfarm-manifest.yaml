@@ -1,0 +1,12 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: hobbyfarm-charts
+spec:
+  charts:
+    - name: hobbyfarm
+      repoURL: https://hobbyfarm.github.io/hobbyfarm
+      version: 3.0.1
+      add-images: true
+      valuesFiles:
+        - hobbyfarm-values.yaml

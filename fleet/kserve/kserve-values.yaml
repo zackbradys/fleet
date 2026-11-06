@@ -1,0 +1,9 @@
+kserve:
+  controller:
+    # standard mode runs plain deployments, with no knative or istio
+    deploymentMode: Standard
+    # the carbide mirror of quay.io/brancz/kube-rbac-proxy
+    rbacProxyImage: registry.ranchercarbide.dev/rancher/mirrored-brancz-kube-rbac-proxy:v0.18.0
+    gateway:
+      # models stay inside the cluster, reached through agentgateway
+      disableIngressCreation: true

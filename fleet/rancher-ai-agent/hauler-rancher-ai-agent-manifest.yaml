@@ -1,0 +1,12 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: rancher-ai-agent-charts
+spec:
+  charts:
+    - name: rancher-ai-agent
+      repoURL: oci://registry.ranchercarbide.dev/rancher/charts
+      version: 108.0.2+up1.0.2
+      add-images: true
+      valuesFiles:
+        - rancher-ai-agent-values-carbide.yaml

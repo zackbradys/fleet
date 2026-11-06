@@ -1,0 +1,14 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: cert-manager-charts
+  annotations:
+    hauler.dev/registry: registry.ranchercarbide.dev
+spec:
+  charts:
+    - name: cert-manager
+      repoURL: oci://registry.ranchercarbide.dev/charts
+      version: 1.21.3
+      add-images: true
+      valuesFiles:
+        - cert-manager-values-carbide.yaml

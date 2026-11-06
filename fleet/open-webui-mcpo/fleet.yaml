@@ -1,0 +1,15 @@
+defaultNamespace: open-webui-mcpo
+
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: restricted
+
+helm:
+  releaseName: open-webui-mcpo
+  repo: oci://registry.ranchercarbide.dev/charts/open-webui-mcpo
+  version: 1.0.2
+  valuesFiles:
+    - open-webui-mcpo-values-carbide.yaml
+  valuesFrom:
+    - secretKeyRef:
+        name: open-webui-mcpo-values
+        key: values.yaml

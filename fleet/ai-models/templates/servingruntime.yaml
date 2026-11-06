@@ -1,0 +1,37 @@
+apiVersion: serving.kserve.io/v1alpha1
+kind: ServingRuntime
+metadata:
+  name: {{ .Values.runtime.name }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.runtime.name }}
+spec:
+  supportedModelFormats:
+    - name: vllm
+      autoSelect: true
+  containers:
+    - name: kserve-container
+      image: {{ .Values.runtime.image }}
+      args:
+        - --port=8080
+        - --model=/mnt/models
+      {{- with .Values.runtime.env }}
+      env:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      ports:
+        - name: http1
+          containerPort: 8080
+          protocol: TCP
+      readinessProbe:
+        httpGet:
+          path: /health
+          port: 8080
+        periodSeconds: 10
+      volumeMounts:
+        - name: dshm
+          mountPath: /dev/shm
+  volumes:
+    - name: dshm
+      emptyDir:
+        medium: Memory
+        sizeLimit: {{ .Values.runtime.shmSize }}

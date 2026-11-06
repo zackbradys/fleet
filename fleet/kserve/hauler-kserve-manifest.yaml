@@ -1,0 +1,21 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: kserve-charts
+spec:
+  charts:
+    - name: kserve-resources
+      repoURL: oci://ghcr.io/kserve/charts
+      version: v0.21.0
+      add-images: true
+      valuesFiles:
+        - kserve-values.yaml
+---
+apiVersion: content.hauler.cattle.io/v1
+kind: Images
+metadata:
+  name: kserve-images
+spec:
+  images:
+    - name: docker.io/kserve/agent:v0.21.0
+    - name: docker.io/kserve/router:v0.21.0

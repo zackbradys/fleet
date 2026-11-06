@@ -1,0 +1,14 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: open-webui-mcpo-charts
+  annotations:
+    hauler.dev/registry: registry.ranchercarbide.dev
+spec:
+  charts:
+    - name: open-webui-mcpo
+      repoURL: oci://registry.ranchercarbide.dev/charts
+      version: 1.0.2
+      add-images: true
+      valuesFiles:
+        - open-webui-mcpo-values-carbide.yaml

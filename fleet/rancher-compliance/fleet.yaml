@@ -4,7 +4,7 @@ helm:
   releaseName: rancher-compliance
   repo: https://charts.rancher.io
   chart: rancher-compliance
-  version: 110.2.0+up1.5.3
+  version: 110.3.0+up1.5.4
   valuesFiles:
     - rancher-compliance-values-carbide.yaml
 

@@ -1,0 +1,14 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: vllm-gpu-1-charts
+  annotations:
+    hauler.dev/registry: registry.ranchercarbide.dev
+spec:
+  charts:
+    - name: vllm
+      repoURL: oci://registry.ranchercarbide.dev/charts
+      version: 0.1.10
+      add-images: true
+      valuesFiles:
+        - vllm-values-carbide.yaml

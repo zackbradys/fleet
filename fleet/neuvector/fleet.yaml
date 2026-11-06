@@ -5,7 +5,7 @@ helm:
   takeOwnership: true
   repo: https://charts.rancher.io
   chart: neuvector
-  version: 110.0.2+up2.11.2
+  version: 110.0.4+up2.11.4
   valuesFiles:
     - neuvector-values-carbide.yaml
 

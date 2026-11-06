@@ -1,0 +1,28 @@
+runtime:
+  name: vllm
+  image: registry.ranchercarbide.dev/containers/vllm-openai:0.32.0-nvidia
+  shmSize: 20Gi
+  env:
+    - name: DO_NOT_TRACK
+      value: "1"
+    - name: HF_HUB_DISABLE_TELEMETRY
+      value: "1"
+    - name: HF_HUB_DISABLE_UPDATE_CHECK
+      value: "1"
+    - name: HF_HUB_OFFLINE
+      value: "1"
+    - name: VLLM_NO_USAGE_STATS
+      value: "1"
+
+# scrapes the vllm metrics that the ai-monitoring dashboards read
+monitoring:
+  enabled: false
+
+# s3 locations for the storage-config secret, each with type s3, bucket, and region, plus endpoint_url and keys for s3 outside aws
+storage: {}
+
+# service account for the storage initializer, for model storage credentials
+serviceAccountName: ""
+
+# each entry takes name and storage (key and path) or storageUri, and optionally servedModelName, gpus, cpu, memory, args, env, nodeSelector, and tolerations
+models: []

@@ -1,0 +1,14 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: runtime-enforcer-charts
+  annotations:
+    hauler.dev/registry: registry.ranchercarbide.dev
+spec:
+  charts:
+    - name: suse-security-runtime-enforcer
+      repoURL: oci://registry.ranchercarbide.dev/charts
+      version: 0.2.1
+      add-images: true
+      valuesFiles:
+        - runtime-enforcer-values-carbide.yaml

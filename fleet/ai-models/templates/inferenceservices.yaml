@@ -1,0 +1,57 @@
+{{- range .Values.models }}
+---
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: {{ .name }}
+  labels:
+    networking.kserve.io/visibility: cluster-local
+  annotations:
+    serving.kserve.io/autoscalerClass: none
+spec:
+  predictor:
+    minReplicas: 1
+    maxReplicas: 1
+    deploymentStrategy:
+      type: Recreate
+    {{- with $.Values.serviceAccountName }}
+    serviceAccountName: {{ . }}
+    {{- end }}
+    {{- with .nodeSelector }}
+    nodeSelector:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .tolerations }}
+    tolerations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    model:
+      modelFormat:
+        name: vllm
+      runtime: {{ $.Values.runtime.name }}
+      {{- if .storage }}
+      storage:
+        key: {{ .storage.key }}
+        path: {{ .storage.path }}
+      {{- else }}
+      storageUri: {{ .storageUri }}
+      {{- end }}
+      args:
+        - --served-model-name={{ .servedModelName | default .name }}
+        {{- range .args }}
+        - {{ . | quote }}
+        {{- end }}
+      {{- with .env }}
+      env:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      resources:
+        requests:
+          cpu: {{ .cpu | default "4" | quote }}
+          memory: {{ .memory | default "32Gi" }}
+          nvidia.com/gpu: {{ .gpus | default 1 }}
+        limits:
+          cpu: {{ .cpu | default "4" | quote }}
+          memory: {{ .memory | default "32Gi" }}
+          nvidia.com/gpu: {{ .gpus | default 1 }}
+{{- end }}

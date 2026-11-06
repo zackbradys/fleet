@@ -13,8 +13,3 @@ helm:
     - secretKeyRef:
         name: open-webui-values
         key: values.yaml
-
-dependsOn:
-  - name: cert-manager-fleet-cert-manager
-  - name: milvus-fleet-milvus
-  - name: litellm-fleet-litellm

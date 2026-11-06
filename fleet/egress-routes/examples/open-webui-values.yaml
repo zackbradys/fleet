@@ -1,0 +1,24 @@
+# added to the open-webui-values secret, which owns these lists since the catalog bundle sets none of them
+hostAliases:
+  - ip: 10.43.255.250
+    hostnames:
+      - example.customer.gov
+
+# the egress-gateway-ca configmap holds the gateway ca plus any other ca open webui must trust
+volumes:
+  - name: egress-gateway-ca
+    configMap:
+      name: egress-gateway-ca
+      optional: true
+
+volumeMounts:
+  container:
+    - name: egress-gateway-ca
+      mountPath: /etc/ssl/egress
+      readOnly: true
+
+commonEnvVars:
+  - name: SSL_CERT_FILE
+    value: /etc/ssl/egress/ca.crt
+  - name: REQUESTS_CA_BUNDLE
+    value: /etc/ssl/egress/ca.crt

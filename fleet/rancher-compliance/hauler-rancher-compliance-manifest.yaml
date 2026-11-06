@@ -1,0 +1,21 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: rancher-compliance-charts
+spec:
+  charts:
+    - name: rancher-compliance
+      repoURL: https://charts.rancher.io
+      version: 110.3.0+up1.5.4
+      add-images: true
+      valuesFiles:
+        - rancher-compliance-values-carbide.yaml
+---
+apiVersion: content.hauler.cattle.io/v1
+kind: Images
+metadata:
+  name: rancher-compliance-images
+spec:
+  images:
+    - name: registry.ranchercarbide.dev/rancher/security-scan:v0.10.4
+    - name: registry.ranchercarbide.dev/rancher/mirrored-sonobuoy-sonobuoy:v0.57.5

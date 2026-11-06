@@ -1,0 +1,9 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: kserve-crd-charts
+spec:
+  charts:
+    - name: kserve-crd
+      repoURL: oci://ghcr.io/kserve/charts
+      version: v0.21.0

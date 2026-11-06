@@ -1,0 +1,14 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: milvus-charts
+  annotations:
+    hauler.dev/registry: registry.ranchercarbide.dev
+spec:
+  charts:
+    - name: milvus
+      repoURL: oci://registry.ranchercarbide.dev/charts
+      version: 5.0.25
+      add-images: true
+      valuesFiles:
+        - milvus-values-carbide.yaml

@@ -1,0 +1,9 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: ai-cluster-charts
+spec:
+  charts:
+    - name: rancher-cluster-templates
+      repoURL: https://ranchergovernment.github.io/rancher-cluster-templates
+      version: 0.8.1

@@ -1,0 +1,4 @@
+# the chart sets no seccomp profile, which restricted pod security requires
+podSecurityContext:
+  seccompProfile:
+    type: RuntimeDefault

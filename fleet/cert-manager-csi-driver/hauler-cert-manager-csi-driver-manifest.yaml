@@ -1,0 +1,14 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: cert-manager-csi-driver-charts
+  annotations:
+    hauler.dev/registry: registry.ranchercarbide.dev
+spec:
+  charts:
+    - name: cert-manager-csi-driver
+      repoURL: oci://registry.ranchercarbide.dev/charts
+      version: 0.16.1
+      add-images: true
+      valuesFiles:
+        - cert-manager-csi-driver-values-carbide.yaml

@@ -1,0 +1,11 @@
+{{- with .Values.storage }}
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: storage-config
+data:
+  {{- range $key, $value := . }}
+  {{ $key }}: {{ toJson $value | b64enc }}
+  {{- end }}
+{{- end }}

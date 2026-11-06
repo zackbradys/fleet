@@ -1,0 +1,18 @@
+lockedNamespaces:
+  - open-webui
+
+clientCertificate:
+  commonName: rgs-ai-egress
+  # the customer's issuer for the ai's identity
+  issuerRef:
+    name: customer-pki
+    kind: ClusterIssuer
+
+# created with: kubectl -n egress-gateway create secret generic customer-ca --from-file=ca.crt=customer-ca.crt
+upstreamCASecret: customer-ca
+
+sites:
+  - host: example.customer.gov
+    clientCertificate: true
+
+passthrough: []

@@ -1,0 +1,14 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: ollama-gpu-2-charts
+  annotations:
+    hauler.dev/registry: registry.ranchercarbide.dev
+spec:
+  charts:
+    - name: ollama
+      repoURL: oci://registry.ranchercarbide.dev/charts
+      version: 1.95.0
+      add-images: true
+      valuesFiles:
+        - ollama-values-carbide.yaml

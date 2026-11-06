@@ -1,0 +1,9 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: neuvector-crd-charts
+spec:
+  charts:
+    - name: neuvector-crd
+      repoURL: https://charts.rancher.io
+      version: 110.0.4+up2.11.4

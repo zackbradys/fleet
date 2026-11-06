@@ -1,0 +1,48 @@
+global:
+  imageRegistry: registry.ranchercarbide.dev
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+# watches and reads secrets only in its own namespace
+rbac:
+  namespaced: true
+
+# never registers as an ingress, so it can't compete with the cluster ingress
+ingressClass:
+  enabled: false
+gatewayClass:
+  enabled: false
+
+providers:
+  kubernetesCRD:
+    enabled: true
+    allowCrossNamespace: false
+    allowExternalNameServices: true
+    # only routes annotated with this class, which the cluster ingress skips
+    ingressClass: egress-gateway
+  kubernetesIngress:
+    enabled: false
+
+api:
+  dashboard: false
+
+ports:
+  web:
+    expose:
+      default: false
+  websecure:
+    expose:
+      default: true
+
+# reachable only inside the cluster, with the fixed cluster ip set in the egress-gateway-values secret
+service:
+  spec:
+    type: ClusterIP
+
+# every outbound ai call, as the audit trail
+accessLog:
+  enabled: true
+  format: json
+
+log:
+  format: json

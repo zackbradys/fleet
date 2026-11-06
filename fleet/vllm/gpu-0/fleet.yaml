@@ -27,3 +27,11 @@ diff:
       kind: Service
       jsonPointers:
         - /metadata/labels/app.kubernetes.io~1managed-by
+
+### KServe serves the models on kserve clusters instead
+targetCustomizations:
+  - name: kserve
+    clusterSelector:
+      matchLabels:
+        kserve: enabled
+    doNotDeploy: true

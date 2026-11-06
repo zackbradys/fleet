@@ -10,8 +10,8 @@ pipelines:
 tika:
   enabled: true
 
-enableOpenaiApi: true
-openaiBaseApiUrl: http://litellm.litellm.svc.cluster.local:4000/v1
+# no model backend until the site values set one, since a blank url means api.openai.com
+enableOpenaiApi: false
 openaiApiKey: ""
 
 ingress:
@@ -30,196 +30,15 @@ persistence:
   enabled: true
   size: 10Gi
 
-extraEnvFrom:
-  - secretRef:
-      name: ai-open-webui
-
 extraEnvVars:
-  - name: WEBUI_NAME
-    value: RGS AI
   - name: WEBUI_URL
     value: '${ if hasKey .ClusterLabels "ai-webui-host" }https://${ get .ClusterLabels "ai-webui-host" }${ end }'
   - name: ENABLE_SIGNUP
     value: "False"
   - name: ENABLE_INITIAL_ADMIN_SIGNUP
     value: "True"
-  - name: DEFAULT_MODELS
-    value: gpt-oss:120b
-  - name: VECTOR_DB
-    value: milvus
-  - name: MILVUS_URI
-    value: http://milvus.milvus.svc.cluster.local:19530
-  - name: RAG_EMBEDDING_MODEL
-    value: sentence-transformers/all-MiniLM-L6-v2
-  - name: RAG_TOP_K
-    value: "10"
-  - name: ENABLE_RETRIEVAL_QUERY_GENERATION
-    value: "False"
-
-volumes:
-  - name: classification
-    configMap:
-      name: open-webui-classification
-
-volumeMounts:
-  container:
-    - name: classification
-      mountPath: /usr/lib/python3.11/site-packages/open_webui/frontend/static/custom.css
-      subPath: custom.css
-      readOnly: true
-    - name: classification
-      mountPath: /usr/lib/python3.11/site-packages/open_webui/frontend/static/loader.js
-      subPath: loader.js
-      readOnly: true
 
 extraResources:
-  - apiVersion: v1
-    kind: ConfigMap
-    metadata:
-      name: open-webui-classification
-    data:
-      custom.css: |
-        :root {
-          --classification-height: 24px;
-          --classification-background: #007a33;
-          --classification-color: #ffffff;
-        }
-
-        body::before,
-        body::after {
-          content: "UNCLASSIFIED";
-          position: fixed;
-          left: 0;
-          right: 0;
-          z-index: 2147483647;
-          height: var(--classification-height);
-          line-height: var(--classification-height);
-          background: var(--classification-background);
-          color: var(--classification-color);
-          font-size: 14px;
-          font-weight: 400;
-          text-align: center;
-          pointer-events: none;
-        }
-
-        body::before {
-          top: 0;
-        }
-
-        body::after {
-          bottom: 0;
-        }
-
-        body {
-          box-sizing: border-box;
-          padding-top: var(--classification-height);
-          padding-bottom: var(--classification-height);
-        }
-
-        .h-screen,
-        .h-\[100dvh\] {
-          height: calc(100dvh - 2 * var(--classification-height)) !important;
-        }
-
-        .max-h-screen,
-        .max-h-dvh,
-        .max-h-\[100dvh\] {
-          max-height: calc(100dvh - 2 * var(--classification-height)) !important;
-        }
-
-        .min-h-screen {
-          min-height: calc(100dvh - 2 * var(--classification-height)) !important;
-        }
-
-        .modal.fixed {
-          top: var(--classification-height) !important;
-          bottom: var(--classification-height) !important;
-        }
-
-        #sidebar {
-          top: var(--classification-height) !important;
-        }
-
-        #classification-consent {
-          position: fixed;
-          inset: 0;
-          z-index: 2147483646;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: calc(var(--classification-height) + 16px) 16px;
-          background: rgba(0, 0, 0, 0.6);
-        }
-
-        #classification-consent .consent-dialog {
-          max-width: 900px;
-          max-height: 100%;
-          overflow-y: auto;
-          padding: 32px 40px;
-          border-radius: 12px;
-          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        #classification-consent button {
-          display: block;
-          margin: 16px auto 0;
-          padding: 8px 32px;
-          border-radius: 6px;
-          background: #007a33;
-          color: #ffffff;
-          font-size: 14px;
-          font-weight: 600;
-        }
-      loader.js: |
-        (() => {
-          const KEY = "classification-consent";
-          const consent = {
-            "html": "<div style=\"font-size:24px;line-height:2.0;text-align:center;\">\n  <p style=\"margin:0 0 12px 0;\"><strong>DoD Warning and Consent Banner</strong></p>\n</div>\n<div style=\"font-size:14px;line-height:1.6;text-align:center;\">\n  <p style=\"margin:0 0 12px 0;\"><strong>You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only. By using this IS (which includes any device attached to this IS), you consent to the following conditions:</strong></p>\n  <p style=\"margin:0 0 12px 0;\">The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations.</p>\n  <p style=\"margin:0 0 12px 0;\">At any time, the USG may inspect and seize data stored on this IS.</p>\n  <p style=\"margin:0 0 12px 0;\">Communications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any USG authorized purpose.</p>\n  <p style=\"margin:0 0 12px 0;\">This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy.</p>\n  <p style=\"margin:0 0 12px 0;\">Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential.</p>\n  <p style=\"margin:0 0 12px 0;\">See User Agreement for details.</p>\n</div>",
-            "background": "#eeeff4",
-            "color": "#141419",
-            "button": "Accept"
-          };
-          try { if (sessionStorage.getItem(KEY) === "accepted") return; } catch (e) {}
-          const show = () => {
-            const overlay = document.createElement("div");
-            overlay.id = "classification-consent";
-            overlay.innerHTML = '<div class="consent-dialog" role="dialog" aria-modal="true">' + consent.html + '<button type="button">' + consent.button + '</button></div>';
-            overlay.querySelector(".consent-dialog").style.background = consent.background;
-            overlay.querySelector(".consent-dialog").style.color = consent.color;
-            overlay.querySelector("button").addEventListener("click", () => {
-              try { sessionStorage.setItem(KEY, "accepted"); } catch (e) {}
-              overlay.remove();
-            });
-            document.body.appendChild(overlay);
-          };
-          if (document.body) show(); else document.addEventListener("DOMContentLoaded", show);
-        })();
-  - apiVersion: cert-manager.io/v1
-    kind: ClusterIssuer
-    metadata:
-      name: letsencrypt-production
-    spec:
-      acme:
-        server: https://acme-v02.api.letsencrypt.org/directory
-        email: zack.brady@ranchergovernment.com
-        privateKeySecretRef:
-          name: letsencrypt-production
-        solvers:
-          - dns01:
-              route53:
-                region: '${ if hasKey .ClusterLabels "ai-aws-region" }${ get .ClusterLabels "ai-aws-region" }${ end }'
-  - apiVersion: cert-manager.io/v1
-    kind: Certificate
-    metadata:
-      name: open-webui-tls
-    spec:
-      issuerRef:
-        name: letsencrypt-production
-        kind: ClusterIssuer
-      secretName: open-webui-tls
-      commonName: '${ if hasKey .ClusterLabels "ai-webui-host" }${ get .ClusterLabels "ai-webui-host" }${ end }'
-      dnsNames:
-        - '${ if hasKey .ClusterLabels "ai-webui-host" }${ get .ClusterLabels "ai-webui-host" }${ end }'
   - apiVersion: ui.cattle.io/v1
     kind: NavLink
     metadata:
@@ -231,39 +50,6 @@ extraResources:
       group: RGS AI Stack
       sideLabel: CHAT
       toURL: '${ if hasKey .ClusterLabels "ai-webui-host" }https://${ get .ClusterLabels "ai-webui-host" }${ end }'
-  - apiVersion: batch/v1
-    kind: Job
-    metadata:
-      name: open-webui-admin-bootstrap
-    spec:
-      backoffLimit: 20
-      template:
-        spec:
-          restartPolicy: OnFailure
-          containers:
-            - name: bootstrap
-              image: registry.ranchercarbide.dev/containers/open-webui:0.6.41-14.20
-              command:
-                - python3.11
-                - -c
-                - |
-                  import os, time, requests
-                  url = "http://open-webui.open-webui.svc.cluster.local"
-                  creds = {"email": os.environ["WEBUI_ADMIN_EMAIL"], "password": os.environ["WEBUI_ADMIN_PASSWORD"]}
-                  while True:
-                      try:
-                          if requests.get(url + "/health", timeout=5).ok: break
-                      except requests.RequestException: pass
-                      time.sleep(2)
-                  r = requests.post(url + "/api/v1/auths/signin", json=creds, headers={"Accept-Encoding": "gzip, deflate"}, timeout=30)
-                  if r.ok:
-                      print("admin already exists"); raise SystemExit(0)
-                  r = requests.post(url + "/api/v1/auths/signup", json={"name": "RGS AI Admin", **creds}, headers={"Accept-Encoding": "gzip, deflate"}, timeout=30)
-                  r.raise_for_status()
-                  print("admin created, role:", r.json().get("role"))
-              envFrom:
-                - secretRef:
-                    name: ai-open-webui
   - apiVersion: traefik.io/v1alpha1
     kind: Middleware
     metadata:
@@ -272,24 +58,3 @@ extraResources:
       redirectScheme:
         scheme: https
         permanent: true
-  - apiVersion: networking.k8s.io/v1
-    kind: Ingress
-    metadata:
-      name: litellm-api
-      namespace: litellm
-    spec:
-      ingressClassName: traefik
-      tls:
-        - hosts:
-            - '${ if hasKey .ClusterLabels "ai-webui-host" }${ get .ClusterLabels "ai-webui-host" }${ end }'
-      rules:
-        - host: '${ if hasKey .ClusterLabels "ai-webui-host" }${ get .ClusterLabels "ai-webui-host" }${ end }'
-          http:
-            paths:
-              - path: /v1
-                pathType: Prefix
-                backend:
-                  service:
-                    name: litellm
-                    port:
-                      name: http

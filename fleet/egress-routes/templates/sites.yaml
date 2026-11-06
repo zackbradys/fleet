@@ -1,0 +1,65 @@
+{{- range .Values.sites }}
+{{- $name := printf "site-%s" (.host | replace "." "-") | trunc 52 | trimSuffix "-" }}
+{{- $port := .port | default 443 }}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ $name }}
+spec:
+  secretName: {{ $name }}
+  dnsNames:
+    - {{ .host }}
+  issuerRef:
+    name: egress-gateway-ca
+    kind: Issuer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}
+spec:
+  type: ExternalName
+  externalName: {{ .host }}
+  ports:
+    - name: https
+      port: {{ $port }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: {{ $name }}
+  annotations:
+    kubernetes.io/ingress.class: {{ $.Values.ingressClass }}
+spec:
+  serverName: {{ .host }}
+  {{- if .clientCertificate }}
+  certificatesSecrets:
+    - egress-client
+  {{- end }}
+  {{- with $.Values.upstreamCASecret }}
+  rootCAs:
+    - secret: {{ . }}
+  {{- end }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $name }}
+  annotations:
+    kubernetes.io/ingress.class: {{ $.Values.ingressClass }}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`{{ .host }}`)
+      kind: Rule
+      services:
+        - name: {{ $name }}
+          port: {{ $port }}
+          scheme: https
+          passHostHeader: true
+          serversTransport: {{ $name }}
+  tls:
+    secretName: {{ $name }}
+{{- end }}

@@ -1,0 +1,12 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: kubewarden-charts
+spec:
+  charts:
+    - name: admission-controller
+      repoURL: https://charts.kubewarden.io
+      version: 6.1.0
+      add-images: true
+      valuesFiles:
+        - kubewarden-values-carbide.yaml

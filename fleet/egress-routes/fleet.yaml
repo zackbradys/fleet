@@ -1,0 +1,12 @@
+defaultNamespace: egress-gateway
+
+helm:
+  releaseName: egress-routes
+  valuesFrom:
+    - secretKeyRef:
+        name: egress-routes-values
+        key: values.yaml
+
+dependsOn:
+  - name: cert-manager-fleet-cert-manager
+  - name: egress-gateway-fleet-egress-gateway

@@ -1,0 +1,7 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Images
+metadata:
+  name: ai-models-images
+spec:
+  images:
+    - name: registry.ranchercarbide.dev/containers/vllm-openai:0.32.0-nvidia

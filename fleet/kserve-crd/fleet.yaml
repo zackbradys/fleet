@@ -1,0 +1,6 @@
+defaultNamespace: kserve
+
+helm:
+  releaseName: kserve-crd
+  repo: oci://ghcr.io/kserve/charts/kserve-crd
+  version: v0.21.0

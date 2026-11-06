@@ -1,0 +1,9 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: rancher-logging-crd-charts
+spec:
+  charts:
+    - name: rancher-logging-crd
+      repoURL: https://charts.rancher.io
+      version: 110.0.0+up4.10.0-rancher.24

@@ -589,10 +589,10 @@ spec:
   paths:
     - /fleet/ai-cluster
   targets:
-  - name: ai
+  - name: ai-cluster
     clusterSelector:
       matchLabels:
-        ai: enabled
+        ai-cluster: enabled
 ---
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo

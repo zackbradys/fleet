@@ -1,0 +1,27 @@
+global:
+  imageRegistry: registry.ranchercarbide.dev
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+
+# a home and caches in /tmp, since the pod runs as non root and npx and uvx write there
+env:
+  HOME: /tmp
+  npm_config_cache: /tmp/.npm
+  UV_CACHE_DIR: /tmp/.uv
+
+# blank by default, each server added here is served as its own openapi tool server at http://open-webui-mcpo.open-webui-mcpo.svc:8000/<name>
+config:
+  mcpServers:
+    # removes the chart's default server, which downloads from npm when the pod starts
+    memory: null

@@ -1,0 +1,22 @@
+defaultNamespace: kserve
+
+helm:
+  releaseName: kserve
+  repo: oci://ghcr.io/kserve/charts/kserve-resources
+  version: v0.21.0
+  valuesFiles:
+    - kserve-values.yaml
+
+dependsOn:
+  - name: cert-manager-fleet-cert-manager
+  - name: kserve-crd-fleet-kserve-crd
+
+# the kserve controller labels its own service account after install, which fleet would otherwise report as drift
+diff:
+  comparePatches:
+    - apiVersion: v1
+      kind: ServiceAccount
+      name: kserve-controller-manager
+      namespace: kserve
+      jsonPointers:
+        - /metadata/labels/app.kubernetes.io~1managed-by

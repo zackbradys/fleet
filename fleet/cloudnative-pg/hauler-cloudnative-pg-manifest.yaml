@@ -1,0 +1,14 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: cloudnative-pg-charts
+  annotations:
+    hauler.dev/registry: registry.ranchercarbide.dev
+spec:
+  charts:
+    - name: cloudnative-pg
+      repoURL: oci://registry.ranchercarbide.dev/charts
+      version: 0.29.1
+      add-images: true
+      valuesFiles:
+        - cloudnative-pg-values-carbide.yaml

@@ -1,0 +1,12 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: airgapped-docs-charts
+spec:
+  charts:
+    - name: carbide-offline-docs
+      repoURL: oci://registry.ranchercarbide.dev/carbide-charts
+      version: 2.0.0-2
+      add-images: true
+      valuesFiles:
+        - airgapped-docs-values-carbide.yaml

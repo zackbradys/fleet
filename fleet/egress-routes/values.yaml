@@ -1,0 +1,27 @@
+# class the egress gateway watches, which the cluster ingress skips
+ingressClass: egress-gateway
+
+# namespaces whose pods can leave the cluster only through the gateway
+lockedNamespaces: []
+
+# the ai's own client certificate, presented to every site with clientCertificate set
+clientCertificate:
+  commonName: rgs-ai-egress
+  duration: 2160h
+  renewBefore: 360h
+  # the customer's issuer, or empty to sign it with the gateway ca for testing
+  issuerRef: {}
+
+# secret in this namespace holding the customer's ca under ca.crt, used to verify their sites
+upstreamCASecret: ""
+
+# https sites the ai may call, answered with a gateway certificate and sent on with the client certificate
+sites: []
+#  - host: example.customer.gov
+#    port: 443
+#    clientCertificate: true
+
+# hosts passed through by sni without decryption, such as the bedrock endpoint
+passthrough: []
+#  - host: bedrock-runtime.us-gov-east-1.amazonaws.com
+#    port: 443

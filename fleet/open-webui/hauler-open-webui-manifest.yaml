@@ -1,0 +1,14 @@
+apiVersion: content.hauler.cattle.io/v1
+kind: Charts
+metadata:
+  name: open-webui-charts
+  annotations:
+    hauler.dev/registry: registry.ranchercarbide.dev
+spec:
+  charts:
+    - name: open-webui
+      repoURL: oci://registry.ranchercarbide.dev/charts
+      version: 8.19.1
+      add-images: true
+      valuesFiles:
+        - open-webui-values-carbide.yaml

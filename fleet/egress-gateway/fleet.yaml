@@ -1,0 +1,15 @@
+defaultNamespace: egress-gateway
+
+namespaceLabels:
+  pod-security.kubernetes.io/enforce: restricted
+
+helm:
+  releaseName: egress-gateway
+  repo: oci://registry.ranchercarbide.dev/charts/traefik-proxy
+  version: 42.3.0
+  valuesFiles:
+    - egress-gateway-values-carbide.yaml
+  valuesFrom:
+    - secretKeyRef:
+        name: egress-gateway-values
+        key: values.yaml

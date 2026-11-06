@@ -21,8 +21,18 @@ All images and charts that Carbide provides come from `registry.ranchercarbide.d
 | `longhorn=enabled` | Longhorn: `longhorn`, `longhorn-crd`, `longhorn-configs` | ✅ | ✅ | Default storage class |
 | `longhorn-v2=enabled` | Longhorn V2 Data Engine: switches `longhorn` and `longhorn-encrypted` to v2 and turns off v1 | ✅ | ✅ | Needs `longhorn=enabled`, plus 2 GiB of hugepages, the `vfio_pci`, `uio_pci_generic`, and `nvme_tcp` modules, and raw block disks on each node, registered with the `node.longhorn.io/default-disks-config` annotation |
 | **RGS AI Stack** | | | | |
-| `ai=enabled` | On `local`: `ai-cluster`, which builds the AI cluster. On the AI cluster: `gpu-operator`, `cloudnative-pg`, `milvus`, `vllm`, `litellm`, `open-webui` (with the Chat link in the AI cluster's Rancher dashboard), and with `monitoring=enabled` also `ai-monitoring` (the NVIDIA DCGM and vLLM dashboards and the vLLM ServiceMonitor) | ✅ | ✅ | Needs the `vllm-values` and `open-webui-values` secrets (key `values.yaml`, `{}` for none) in the `vllm` and `open-webui` namespaces, for anything cluster-specific like air-gapped model files |
-| `ollama=enabled` | Ollama: `ollama`, one release per GPU node (`gpu-0` to `gpu-2`), as an alternative to `vllm` | | ✅ | Needs GPU nodes labeled `rgs.ai/gpu=nvidia`. Open WebUI connects to `vllm` through LiteLLM, so add Ollama as a connection in Open WebUI |
+| `ai-cluster=enabled` | AI cluster: `ai-cluster`, which builds a downstream cluster from `rancher-cluster-templates` | ✅ |  | Needs the `ai-cluster-config` and `ai-cluster-values` secrets in `fleet-default` |
+| `gpu-operator=enabled` | NVIDIA GPU Operator: `gpu-operator` | | ✅ | Leave it off on a cluster that already runs the GPU Operator |
+| `open-webui=enabled` | Open WebUI: `open-webui`, with Apache Tika and the Chat link in the cluster's Rancher dashboard. No model backend until the values set one | | ✅ | Needs the `open-webui-values` secret (key `values.yaml`, `{}` for none) in `open-webui` for the model backend, branding, and anything cluster-specific, and the `open-webui-tls` secret for the `ai-webui-host` cluster label's ingress |
+| `open-webui-mcpo=enabled` | Open WebUI mcpo: `open-webui-mcpo`, which serves MCP servers that run as a local command as OpenAPI tool servers for Open WebUI, each at `http://open-webui-mcpo.open-webui-mcpo.svc:8000/<name>`. Ships with no servers | | ✅ | Needs the `open-webui-mcpo-values` secret (key `values.yaml`) in `open-webui-mcpo` with at least one server under `config.mcpServers`, since mcpo won't start without one. Servers started with `npx` or `uvx` download at startup, so an airgap needs them packaged ahead of time or a local npm and PyPI mirror |
+| `vllm=enabled` | vLLM: `vllm`, one release per GPU node | | ✅ | Needs `gpu-operator=enabled` and the `vllm-values` secret (key `values.yaml`) in `vllm`. Downloads its model from Hugging Face unless the values point it at local files |
+| `litellm=enabled` | LiteLLM: `litellm`, an OpenAI compatible gateway | | ✅ | Needs the `ai-litellm` secret and `ai-litellm-models` ConfigMap in `litellm` |
+| `milvus=enabled` | Milvus: `milvus`, a vector database for Open WebUI's document search | | ✅ |  |
+| `ai-monitoring=enabled` | AI dashboards: `ai-monitoring`, the NVIDIA DCGM and vLLM dashboards and the vLLM ServiceMonitor | | ✅ | Needs `monitoring=enabled` |
+| `ollama=enabled` | Ollama: `ollama`, one release per GPU node (`gpu-0` to `gpu-2`), as an alternative to `vllm` | | ✅ | Needs `gpu-operator=enabled` and GPU nodes labeled `rgs.ai/gpu=nvidia`. Add Ollama as a connection in Open WebUI |
+| `kserve=enabled` | KServe and vLLM: `kserve-crd`, `kserve` (Standard mode, no Knative or Istio), and `ai-models` (the RGS vLLM OpenAI image as a ServingRuntime, one InferenceService per model, and with `monitoring=enabled` a PodMonitor for the `ai-monitoring` vLLM dashboards). Replaces `vllm` on the same cluster | | ✅ | Needs `cert-manager` and the `ai-models-values` secret (key `values.yaml`) in `ai-models`, which lists the models and the S3 buckets that hold them. Each model is reached at `http://<name>-predictor.ai-models.svc.cluster.local/v1` |
+| `egress-gateway=enabled` | AI Egress Gateway: `egress-gateway` (a separate Traefik that never registers as an ingress) and `egress-routes` (the allowed sites, the AI's own client certificate, and network policies so the listed namespaces leave the cluster only through the gateway). Every outbound call is in the gateway's access log | | ✅ | Needs `cert-manager`, the `egress-gateway-values` secret with a fixed `service.spec.clusterIP`, and the `egress-routes-values` secret, both in `egress-gateway` (examples in [`fleet/egress-routes/examples/`](fleet/egress-routes/examples/)). Each locked app needs `hostAliases` pointing its allowed sites at that IP and must trust the gateway CA, such as Open WebUI mounting an `egress-gateway-ca` ConfigMap through its values |
+| `agentgateway=enabled` | agentgateway: `agentgateway-crds` and `agentgateway`, the controller for the `agentgateway` GatewayClass, which serves models (local and Amazon Bedrock) behind one OpenAI compatible endpoint and fronts MCP servers | | ✅ | Needs the Gateway API standard CRDs, which RKE2's Traefik installs from v1.36. The Gateway, models, and API keys come from the cluster's own manifests. In an airgap, mirror `cr.agentgateway.dev` in `registries.yaml`, since the controller creates each proxy with that registry |
 | `rancher-ai=enabled` | RGS AI Integrations: the `rancher-ai` UI extension (Liz, the RGS AI Assistant), `rancher-ai-agent` (the RGS AI Agent and RGS MCP Server behind it), and `rancher-ai-ui-tools` (Liz's UI tools, turned on) | ✅ |  | Needs `ui-extensions=enabled` and the `rancher-ai-agent-values` secret in `fleet-local`. Uses LiteLLM on the AI cluster at `https://<ai-webui-host>/v1` through the agent's `openai` provider |
 | **RGS HobbyFarm** | | | | |
 | `hobbyfarm=enabled` | HobbyFarm: `hobbyfarm` (the HobbyFarm chart with the RGS Learn branding) and `hobbyfarm-configs` (the Environment, VM Templates, Users, TLS Certificate, and the Student and Admin links in that cluster's Rancher dashboard) | ✅ | ✅ | Needs the `hobbyfarm-values`, `hobbyfarm-configs-values`, and `aws-creds` secrets in `hobbyfarm-system`, which [zackbradys/hobbyfarm](https://github.com/zackbradys/hobbyfarm) creates, and the `letsencrypt-production` ClusterIssuer (on `local` from the Rancher install). The scenarios and courses come from that repo too |
@@ -45,6 +55,20 @@ kubectl apply -f https://raw.githubusercontent.com/zackbradys/fleet/main/fleet-r
 # Adds the GitRepo(s) for use with all downstream cluster(s)
 kubectl apply -f https://raw.githubusercontent.com/zackbradys/fleet/main/fleet-resources-default.yaml
 ```
+
+## Airgap With Hauler
+
+Each bundle directory has a `hauler-<name>-manifest.yaml` with its chart and every image it pulls, and a `.fleetignore` that keeps Fleet from applying it. The UI extensions have none, since their charts ship inside the `ui-plugin-catalog` image.
+
+```bash
+# login to the carbide registry
+hauler login registry.ranchercarbide.dev --username <username> --password <password>
+
+# builds one store from every bundle manifest
+hauler store sync -p linux/amd64 $(find fleet -name 'hauler-*-manifest.yaml' -exec printf -- '-f %s ' {} \;)
+```
+
+Leave off `--registry`, because it overrides the `hauler.dev/registry` annotation that points the Carbide charts' image lists at `registry.ranchercarbide.dev`.
 
 ## Carbide Without Fleet (Optional)
 
