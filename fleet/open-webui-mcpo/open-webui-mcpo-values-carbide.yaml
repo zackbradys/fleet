@@ -14,7 +14,7 @@ securityContext:
     drop:
       - ALL
 
-# a home and caches in /tmp, since the pod runs as non root and npx and uvx write there
+# a home and caches in /tmp, which npx and uvx can write as the non root user
 env:
   HOME: /tmp
   npm_config_cache: /tmp/.npm

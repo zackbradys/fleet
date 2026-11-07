@@ -1,6 +1,6 @@
 # the domain, subnet, security group, and users come from the hobbyfarm-configs-values secret
 
-# required, the domain the hobbyfarm hostnames are under
+# required, the parent domain of the hobbyfarm hostnames
 domain: ""
 
 hostnames:
@@ -67,6 +67,6 @@ userSettings:
   terminal_fontSize: "16"
   terminal_theme: GitHub
 
-# the student and admin links in the rancher dashboard of the cluster hobbyfarm runs on
+# the student and admin links in the rancher dashboard of hobbyfarm's own cluster
 navlinks:
   enabled: true

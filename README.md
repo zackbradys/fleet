@@ -1,4 +1,4 @@
-## Rancher Fleet - Kubernetes + GitOps
+# Rancher Fleet - Kubernetes + GitOps
 
 All images and charts that Carbide provides come from `registry.ranchercarbide.dev` (`*-values-carbide.yaml`). Charts from the Carbide OCI registry (`oci://registry.ranchercarbide.dev/...`) are pulled with a `registry-creds` basic-auth secret (Carbide registry username and password), which must exist in both `fleet-local` and `fleet-default`.
 
@@ -10,18 +10,18 @@ All images and charts that Carbide provides come from `registry.ranchercarbide.d
 | Label | Installs | Rancher (`local`) | Downstream | Notes |
 |---|---|---|---|---|
 | **RGS Carbide** | | | | |
-| `carbide=enabled` | Compliance and STIG profiles: `rancher-compliance`, `rancher-compliance-crd`, `rgs-stig-profiles`, `airgapped-docs` | ✅ | ✅ | `airgapped-docs` is `local` only |
+| `carbide=enabled` | Compliance and STIG profiles: `rancher-compliance`, `rancher-compliance-crd`, `rgs-stig-profiles`, `airgapped-docs` | ✅ | ✅ | `local` is the one cluster that gets `airgapped-docs` |
 | `ui-extensions=enabled` | RGS UI Plugin Catalog: `ui-plugin-catalog` | ✅ |  |  |
 | `<name>-ui-extension=enabled` | One UI extension from the catalog: `capa`, `elemental`, `harvester`, `admission-controller` (or `kubewarden`), `neuvector`, `observability`, `rancher-ai`, `supportability-review`, `virtual-clusters`, or `vulnerability-scanner` | ✅ |  | Needs `ui-extensions=enabled` |
 | **RGS Security** | | | | |
 | `admission-controller=enabled` | RGS Security Admission Controller: `admission-controller`, with Policy Reporter | ✅ | ✅ | Use this or `kubewarden=enabled`, not both |
-| `vulnerability-scanner=enabled` | RGS Security Vulnerability Scanner: `vulnerability-scanner`, plus `cloudnative-pg` | ✅ | ✅ | Needs `cert-manager`. In an airgap, add `airgap-registry=<registry hostname>` so the workers pull the Trivy databases from the registry that `hauler store copy` filled, with the GitHub VEXHub sources off |
+| `vulnerability-scanner=enabled` | RGS Security Vulnerability Scanner: `vulnerability-scanner`, plus `cloudnative-pg` | ✅ | ✅ | Needs `cert-manager`. In an airgap, `airgap-registry=<registry hostname>` points the workers at the Trivy databases in the registry that `hauler store copy` filled and turns off the GitHub VEXHub sources |
 | `runtime-enforcer=enabled` | RGS Security Runtime Enforcer: `runtime-enforcer`, plus `cert-manager-csi-driver` | ✅ | ✅ | Needs `cert-manager` |
 | **RGS Storage** | | | | |
 | `longhorn=enabled` | Longhorn: `longhorn`, `longhorn-crd`, `longhorn-configs` | ✅ | ✅ | Default storage class. `longhorn-configs` installs `open-iscsi` and the NFS client on nodes that lack them, which needs the OS package repos |
 | `longhorn-v2=enabled` | Longhorn V2 Data Engine: switches `longhorn` and `longhorn-encrypted` to v2 and turns off v1 | ✅ | ✅ | Needs `longhorn=enabled`, plus 2 GiB of hugepages, the `vfio_pci`, `uio_pci_generic`, and `nvme_tcp` modules, and raw block disks on each node, registered with the `node.longhorn.io/default-disks-config` annotation |
 | **RGS AI Stack** | | | | |
-| `ai-cluster=enabled` | AI cluster: `ai-cluster`, which builds a downstream cluster from `rancher-cluster-templates` | ✅ |  | Needs the `ai-cluster-config` and `ai-cluster-values` secrets in `fleet-default` |
+| `ai-cluster=enabled` | AI cluster: `ai-cluster`, which builds a downstream cluster from `rancher-cluster-templates` | ✅ |  | Needs the `ai-cluster-config` and `ai-cluster-values` secrets in `fleet-local`, which Fleet copies to `fleet-default` |
 | `gpu-operator=enabled` | NVIDIA GPU Operator: `gpu-operator` | | ✅ | Leave it off on a cluster that already runs the GPU Operator. The precompiled driver tag must match the GPU node kernel, `gpu-driver=compiled` uses NVIDIA's RHEL 9 driver container, which compiles at boot against the node's `kernel-devel`, `kernel-headers`, `kernel-core`, and `gcc` from its package repos, and `gpu-driver=preinstalled` turns the operator's driver off for a node image that carries its own |
 | `open-webui=enabled` | Open WebUI: `open-webui`, with Apache Tika and the Chat link in the cluster's Rancher dashboard. No model backend until the values set one | | ✅ | Needs the `open-webui-values` secret (key `values.yaml`, `{}` for none) in `open-webui` for the model backend, branding, and anything cluster-specific, and the `open-webui-tls` secret for the `ai-webui-host` cluster label's ingress |
 | `open-webui-mcpo=enabled` | Open WebUI mcpo: `open-webui-mcpo`, which serves MCP servers that run as a local command as OpenAPI tool servers for Open WebUI, each at `http://open-webui-mcpo.open-webui-mcpo.svc:8000/<name>`. Ships with no servers | | ✅ | Needs the `open-webui-mcpo-values` secret (key `values.yaml`) in `open-webui-mcpo` with at least one server under `config.mcpServers`, since mcpo won't start without one. Servers started with `npx` or `uvx` download at startup, so an airgap needs them packaged ahead of time or a local npm and PyPI mirror |
@@ -33,9 +33,9 @@ All images and charts that Carbide provides come from `registry.ranchercarbide.d
 | `kserve=enabled` | KServe and vLLM: `kserve-crd`, `kserve` (Standard mode, no Knative or Istio), and `ai-models` (the RGS vLLM OpenAI image as a ServingRuntime, one InferenceService per model, and with `monitoring=enabled` a PodMonitor for the `ai-monitoring` vLLM dashboards). Replaces `vllm` on the same cluster | | ✅ | Needs `cert-manager` and the `ai-models-values` secret (key `values.yaml`) in `ai-models`, which lists the models and the S3 buckets that hold them. Each model is reached at `http://<name>-predictor.ai-models.svc.cluster.local/v1` |
 | `egress-gateway=enabled` | AI Egress Gateway: `egress-gateway` (a separate Traefik that never registers as an ingress) and `egress-routes` (the allowed sites, the AI's own client certificate, and network policies so the listed namespaces leave the cluster only through the gateway). Every outbound call is in the gateway's access log | | ✅ | Needs `cert-manager`, the `egress-gateway-values` secret with a fixed `service.spec.clusterIP`, and the `egress-routes-values` secret, both in `egress-gateway` (examples in [`fleet/egress-routes/examples/`](fleet/egress-routes/examples/)). Each locked app needs `hostAliases` pointing its allowed sites at that IP and must trust the gateway CA, such as Open WebUI mounting an `egress-gateway-ca` ConfigMap through its values |
 | `agentgateway=enabled` | agentgateway: `agentgateway-crds` and `agentgateway`, the controller for the `agentgateway` GatewayClass, which serves models (local and Amazon Bedrock) behind one OpenAI compatible endpoint and fronts MCP servers | | ✅ | Needs the Gateway API standard CRDs, which RKE2's Traefik installs from v1.36. The Gateway, models, and API keys come from the cluster's own manifests. In an airgap, mirror `cr.agentgateway.dev` in `registries.yaml`, since the controller creates each proxy with that registry |
-| `rancher-ai=enabled` | RGS AI Integrations: the `rancher-ai` UI extension (Liz, the RGS AI Assistant), `rancher-ai-agent` (the RGS AI Agent and RGS MCP Server behind it), and `rancher-ai-ui-tools` (Liz's UI tools, turned on) | ✅ |  | Needs `ui-extensions=enabled` and the `rancher-ai-agent-values` secret in `fleet-local`. Uses LiteLLM on the AI cluster at `https://<ai-webui-host>/v1` through the agent's `openai` provider |
+| `rancher-ai=enabled` | RGS AI Integrations: the `rancher-ai` UI extension (Liz, the RGS AI Assistant), `rancher-ai-agent` (the RGS AI Agent and RGS MCP Server behind it), and `rancher-ai-ui-tools` (Liz's UI tools, enabled) | ✅ |  | Needs `ui-extensions=enabled` and the `rancher-ai-agent-values` secret in `fleet-local`. Uses the model gateway on the AI cluster, such as agentgateway, at `https://<ai-webui-host>/v1` through the agent's `openai` provider |
 | **RGS HobbyFarm** | | | | |
-| `hobbyfarm=enabled` | HobbyFarm: `hobbyfarm` (the HobbyFarm chart with the RGS Learn branding) and `hobbyfarm-configs` (the Environment, VM Templates, Users, TLS Certificate, and the Student and Admin links in that cluster's Rancher dashboard) | ✅ | ✅ | Needs the `hobbyfarm-values`, `hobbyfarm-configs-values`, and `aws-creds` secrets in `hobbyfarm-system`, which [zackbradys/hobbyfarm](https://github.com/zackbradys/hobbyfarm) creates, and the `letsencrypt-production` ClusterIssuer (on `local` from the Rancher install). The scenarios and courses come from that repo too |
+| `hobbyfarm=enabled` | HobbyFarm: `hobbyfarm` (the HobbyFarm chart with the RGS Learn branding) and `hobbyfarm-configs` (the Environment, VM Templates, Users, TLS Certificate, and the Student and Admin links in that cluster's Rancher dashboard) | ✅ | ✅ | Needs the `hobbyfarm-values`, `hobbyfarm-configs-values`, and `aws-creds` secrets in `hobbyfarm-system`, which [zackbradys/hobbyfarm](https://github.com/zackbradys/hobbyfarm) creates, and the `letsencrypt-production` ClusterIssuer (on `local` from the Rancher install). That repo also holds the scenarios and courses |
 | **Platform Apps** | | | | |
 | `cert-manager=enabled` | cert-manager: `cert-manager` | ✅ | ✅ | The `local` cluster usually has `cert-manager` from Rancher's install |
 | `cert-manager-csi-driver=enabled` | cert-manager CSI driver: `cert-manager-csi-driver` | ✅ | ✅ | Also installed by `runtime-enforcer=enabled` |
@@ -64,15 +64,17 @@ Each bundle directory has a `hauler-<name>-manifest.yaml` with its chart and eve
 # login to the carbide registry
 hauler login registry.ranchercarbide.dev --username <username> --password <password>
 
-# builds one store from every bundle manifest
-hauler store sync -p linux/amd64 $(find fleet -name 'hauler-*-manifest.yaml' -exec printf -- '-f %s ' {} \;)
+# builds one store from every bundle manifest, each synced from its own folder so its relative values files resolve
+find fleet -name 'hauler-*-manifest.yaml' | while read -r m; do
+  (cd "$(dirname "$m")" && hauler store sync -s "$OLDPWD/store" -p linux/amd64 -f "$(basename "$m")")
+done
 ```
 
 Leave off `--registry`, because it overrides the `hauler.dev/registry` annotation that points the Carbide charts' image lists at `registry.ranchercarbide.dev`.
 
 ## Carbide Without Fleet (Optional)
 
-Shell helpers that install the same Carbide pieces with `helm`/`kubectl` are in [`shell/`](shell/README.md)
+Shell helpers that install the same Carbide pieces with `helm` and `kubectl` are in [`shell/`](shell/README.md).
 
 ## Fleet Deployment Architecture Diagram
 

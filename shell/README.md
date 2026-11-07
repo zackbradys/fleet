@@ -1,12 +1,11 @@
-
-## Carbide Deployment with Fleet
+# Carbide Without Fleet
 
 ### Deployment Options
 
-In order to deploy Rancher Government Carbide, you have two deployment options. You can deploy it **only** on the **`local` cluster** or on **all** the **`local` and `downstream` clusters**.
-* Ensure the cluster(s) are configured with the Carbide images and private registry ([docs here](https://rancherfederal.github.io/carbide-docs/docs/registry-docs/kubernetes-config)).
-* Apply the shell variables, while replacing `$DOMAIN` and `$CarbideRegistry`.
-* Lastly, apply the curl command to each of the `local` or `downstream` cluster(s).
+These scripts install the Carbide pieces with `helm` and `kubectl`, with `carbide-local.sh` for the `local` cluster and `carbide-default.sh` for each downstream cluster.
+
+* Configure each cluster for the Carbide registry first, as in the [Carbide registry docs](https://docs.ranchercarbide.dev/docs/registry-docs/introduction).
+* Set `DOMAIN` and `CarbideRegistry`, then download and run the script against that cluster.
 
 ### Carbide Local Script
 ```bash
@@ -16,6 +15,7 @@ export CarbideRegistry=registry.url
 
 ### Run the Carbide Local Script
 curl -#OL https://raw.githubusercontent.com/zackbradys/fleet/main/shell/carbide-local.sh
+bash carbide-local.sh
 ```
 
 ### Carbide Default Script
@@ -26,4 +26,5 @@ export CarbideRegistry=registry.url
 
 ### Run the Carbide Default Script
 curl -#OL https://raw.githubusercontent.com/zackbradys/fleet/main/shell/carbide-default.sh
+bash carbide-default.sh
 ```
