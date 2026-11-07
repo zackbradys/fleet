@@ -1,6 +1,6 @@
-### The environment-specific values (domain, subnet, security group, and users) come from the hobbyfarm-configs-values secret
+# the domain, subnet, security group, and users come from the hobbyfarm-configs-values secret
 
-# (Required) The domain the HobbyFarm hostnames are under
+# required, the domain the hobbyfarm hostnames are under
 domain: ""
 
 hostnames:
@@ -18,10 +18,10 @@ environment:
   name: aws-env
   provider: aws
   region: us-east-1
-  # (Required) The subnet and security group for the student VMs
+  # required, the subnet and security group for the student vms
   subnet: ""
   securityGroup: ""
-  # The secret with the access_key and secret_key the student VMs are created with
+  # the secret with the access_key and secret_key for the student vms
   credSecret: aws-creds
   executorImage: rancher/terraform-controller-executor:v0.0.13-alpha1
   capacity: 300
@@ -33,9 +33,7 @@ module:
   url: https://github.com/zackbradys/tf-module-aws
   branch: master
 
-# The scenarios reference these names, so keep them when changing the images
-# The RKE2 v1.36 support matrix covers Rocky 9.7+, RHEL 9.7+, Ubuntu 22.04/24.04/26.04, and SLES 15 SP6/SP7 and 16.0
-# The us-east-1 AMIs come from ~/Documents/Coding/ami-audit.sh
+# the scenarios reference these names, so keep them when changing the us-east-1 amis
 vmTemplates:
   al2023-6.1:
     displayName: amazon-linux-2023-6.1
@@ -69,6 +67,6 @@ userSettings:
   terminal_fontSize: "16"
   terminal_theme: GitHub
 
-# The Student and Admin links in the Rancher cluster dashboard of the cluster HobbyFarm runs on
+# the student and admin links in the rancher dashboard of the cluster hobbyfarm runs on
 navlinks:
   enabled: true

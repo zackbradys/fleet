@@ -18,11 +18,11 @@ runtime:
 monitoring:
   enabled: false
 
-# s3 locations for the storage-config secret, each with type s3, bucket, and region, plus endpoint_url and keys for s3 outside aws
+# the storage-config entries, each with type, bucket, and region, plus endpoint_url and keys outside aws
 storage: {}
 
-# service account for the storage initializer, for model storage credentials
+# service account with the storage initializer's model storage credentials
 serviceAccountName: ""
 
-# each entry takes name and storage (key and path) or storageUri, and optionally servedModelName, gpus, cpu, memory, args, env, nodeSelector, and tolerations
+# each model needs a name and storage or storageUri, see templates/inferenceservices.yaml for the rest
 models: []

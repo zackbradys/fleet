@@ -14,9 +14,13 @@ metadata:
   name: gpu-operator-images
 spec:
   images:
-    # precompiled driver, the tag must match the GPU node kernel from uname -r
+    # precompiled drivers, each tag matching a gpu node kernel from uname -r
     - name: registry.ranchercarbide.dev/third-party/nvidia/driver:595-6.12.0-160000.38-default-sles16.0
     - name: registry.ranchercarbide.dev/third-party/nvidia/driver:595-6.12.0-160000.40-default-sles16.0
+    # compiled driver for gpu-driver=compiled, one per rhel 9 minor release the gpu nodes run
+    - name: nvcr.io/nvidia/driver:595.112.07-rhel9.6
+    - name: nvcr.io/nvidia/driver:595.112.07-rhel9.7
+    - name: nvcr.io/nvidia/driver:595.112.07-rhel9.8
     - name: nvcr.io/nvidia/gpu-operator:v26.7.2
     - name: nvcr.io/nvidia/k8s/container-toolkit:v1.20.1
     - name: nvcr.io/nvidia/k8s-device-plugin:v0.20.1

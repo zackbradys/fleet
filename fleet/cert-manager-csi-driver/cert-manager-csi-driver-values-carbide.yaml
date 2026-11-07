@@ -1,2 +1,6 @@
 global:
   imageRegistry: registry.ranchercarbide.dev
+
+# the csi driver runs on every node, including the tainted gpu nodes
+tolerations:
+  - operator: Exists

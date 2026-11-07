@@ -1,2 +1,7 @@
 global:
   imageRegistry: registry.ranchercarbide.dev
+
+# the agent runs on every node, including the tainted gpu nodes
+agent:
+  tolerations:
+    - operator: Exists

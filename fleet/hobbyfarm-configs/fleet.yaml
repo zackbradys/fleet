@@ -10,7 +10,7 @@ helm:
 dependsOn:
   - name: hobbyfarm-fleet-hobbyfarm
 
-### HobbyFarm updates these when users add access codes or change their settings
+# hobbyfarm updates these when users add access codes or change their settings
 diff:
   comparePatches:
     - apiVersion: hobbyfarm.io/v2

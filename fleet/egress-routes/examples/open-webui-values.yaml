@@ -1,4 +1,4 @@
-# added to the open-webui-values secret, which owns these lists since the catalog bundle sets none of them
+# added to the open-webui-values secret, since the catalog bundle sets none of these lists
 hostAliases:
   - ip: 10.43.255.250
     hostnames:

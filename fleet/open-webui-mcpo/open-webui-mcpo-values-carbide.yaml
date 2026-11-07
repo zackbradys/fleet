@@ -20,7 +20,7 @@ env:
   npm_config_cache: /tmp/.npm
   UV_CACHE_DIR: /tmp/.uv
 
-# blank by default, each server added here is served as its own openapi tool server at http://open-webui-mcpo.open-webui-mcpo.svc:8000/<name>
+# blank by default, each server here is served at http://open-webui-mcpo.open-webui-mcpo.svc:8000/<name>
 config:
   mcpServers:
     # removes the chart's default server, which downloads from npm when the pod starts

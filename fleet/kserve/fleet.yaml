@@ -11,7 +11,7 @@ dependsOn:
   - name: cert-manager-fleet-cert-manager
   - name: kserve-crd-fleet-kserve-crd
 
-# the kserve controller labels its own service account after install, which fleet would otherwise report as drift
+# the kserve controller labels its own service account, which fleet would report as drift
 diff:
   comparePatches:
     - apiVersion: v1

@@ -15,3 +15,25 @@ helm:
   version: v26.7.2
   valuesFiles:
     - gpu-operator-values-carbide.yaml
+
+# precompiled sles drivers from carbide by default, or another driver picked by the gpu-driver label
+targetCustomizations:
+  # rhel 9, built at boot from the node's kernel-devel, kernel-headers, kernel-core, and gcc
+  - name: driver-compiled
+    clusterSelector:
+      matchLabels:
+        gpu-driver: compiled
+    helm:
+      values:
+        driver:
+          repository: nvcr.io/nvidia
+          version: "595.112.07"
+          usePrecompiled: false
+  - name: driver-preinstalled
+    clusterSelector:
+      matchLabels:
+        gpu-driver: preinstalled
+    helm:
+      values:
+        driver:
+          enabled: false

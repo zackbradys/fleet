@@ -1,4 +1,4 @@
-### The hostnames and name prefixes come from the hobbyfarm-values secret
+# the hostnames and name prefixes come from the hobbyfarm-values secret
 ingress:
   enabled: true
   tls:

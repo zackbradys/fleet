@@ -2,13 +2,17 @@ apiVersion: content.hauler.cattle.io/v1
 kind: Charts
 metadata:
   name: open-webui-mcpo-charts
-  annotations:
-    hauler.dev/registry: registry.ranchercarbide.dev
 spec:
   charts:
     - name: open-webui-mcpo
       repoURL: oci://registry.ranchercarbide.dev/charts
       version: 1.0.2
-      add-images: true
-      valuesFiles:
-        - open-webui-mcpo-values-carbide.yaml
+---
+# listed by hand, since add-images pulls the chart's test busybox, which carbide doesn't serve
+apiVersion: content.hauler.cattle.io/v1
+kind: Images
+metadata:
+  name: open-webui-mcpo-images
+spec:
+  images:
+    - name: registry.ranchercarbide.dev/containers/open-webui-mcpo:0.0.17-2.18

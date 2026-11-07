@@ -87,7 +87,7 @@ helm repo add carbide-charts https://rancherfederal.github.io/carbide-charts
 helm repo add kubewarden https://charts.kubewarden.io
 helm repo update
 
-### Needs helm registry login registry.ranchercarbide.dev
+# needs helm registry login registry.ranchercarbide.dev
 helm upgrade -i airgapped-docs oci://registry.ranchercarbide.dev/carbide-charts/carbide-offline-docs -n carbide-docs-system --create-namespace --version=2.0.0-latest --set image.pullPolicy=IfNotPresent
 
 ### Install UI Extensions

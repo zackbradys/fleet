@@ -9,6 +9,12 @@ spec:
   policyTypes:
     - Ingress
   ingress:
+    # dns from every pod, which this policy would block on clusters without the cis dns policy
+    - ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
     - from:
         - namespaceSelector:
             matchLabels:
