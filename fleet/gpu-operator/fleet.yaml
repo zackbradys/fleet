@@ -18,6 +18,17 @@ helm:
 
 # precompiled sles drivers from carbide by default, or another driver picked by the gpu-driver label
 targetCustomizations:
+  # rhel 9, precompiled by red hat, each tag matching a gpu node kernel from uname -r
+  - name: driver-precompiled-rhel
+    clusterSelector:
+      matchLabels:
+        gpu-driver: precompiled-rhel
+    helm:
+      values:
+        driver:
+          repository: registry.redhat.io/nvidia
+          image: gpu-driver-rhel9
+          version: "595"
   # rhel 9, built at boot from the node's kernel-devel, kernel-headers, kernel-core, and gcc
   - name: driver-compiled
     clusterSelector:
